@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moggoji/pages/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -147,7 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                                    },
                                     child: Text("Sign In"),
                                   )),
                               Padding(
