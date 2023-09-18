@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moggoji/pages/club_list_page.dart';
 import 'package:moggoji/pages/main_screen.dart';
 import 'package:moggoji/pages/more_page.dart';
 
@@ -26,7 +27,7 @@ class BottomNaviBar extends StatelessWidget {
           if(index == 0){
             Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
           } else if(index == 1){
-
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ClubListPage()));
           } else if(index == 2){
 
           } else if(index == 3){
