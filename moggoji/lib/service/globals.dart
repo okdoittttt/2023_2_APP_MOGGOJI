@@ -1,2 +1,3 @@
-const String baseURL = "http://10.0.2.2:9191/tasks";
+const String baseURL = "http://localhost:9191/users";
+const String registerURL = "$baseURL/register";
 const Map<String, String> headers = {"Content-Type": "application/json"};
