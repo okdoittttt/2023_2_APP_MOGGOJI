@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:moggoji/main.dart';
 import 'package:moggoji/models/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:moggoji/pages/main_screen.dart';
 
 import 'package:moggoji/service/globals.dart';
 
@@ -62,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           TextFormField(
-                            // 회원가입을 위한 컨트롤러 및 처리
+                            // 회원가입을 위한 컨트롤러 및 처리 (중요!!!!)
                             controller: TextEditingController(text: user.id),
                             onChanged: (val) {
                               user.id = val;
@@ -287,9 +286,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             ElevatedButton(
-                              onPressed: () async {
+                              onPressed: () {
                                 try {
-                                  await save();
+                                  save();
                                   // 회원가입에 성공한 경우 다이얼로그 표시
                                   showDialog(
                                     context: context,
