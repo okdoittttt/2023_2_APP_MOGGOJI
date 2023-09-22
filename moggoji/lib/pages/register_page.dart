@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:moggoji/main.dart';
 import 'package:moggoji/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:moggoji/pages/main_screen.dart';
 
 import 'package:moggoji/service/globals.dart';
 
@@ -16,18 +18,17 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   User user = User.fromMap({
-    'number': 0,  // number, id, pwd, email 값을 적절하게 설정해야 합니다.
+    'number': 0, // number, id, pwd, email 값을 적절하게 설정해야 합니다.
     'id': '',
     'pwd': '',
     'email': '',
   });
 
   Future save() async {
-    var res = await http.post(
-        Uri.parse(registerURL),
+    var res = await http.post(Uri.parse(registerURL),
         headers: headers,
-        body: json.encode({'email': user.email, 'pwd': user.pwd, 'id': user.id})
-    );
+        body:
+            json.encode({'email': user.email, 'pwd': user.pwd, 'id': user.id}));
     print(res.body);
   }
 
@@ -61,6 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           TextFormField(
+                            // 회원가입을 위한 컨트롤러 및 처리
                             controller: TextEditingController(text: user.id),
                             onChanged: (val) {
                               user.id = val;
@@ -109,9 +111,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             keyboardType: TextInputType.emailAddress,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
-                              controller: TextEditingController(text: user.email),
+                              controller:
+                                  TextEditingController(text: user.email),
                               onChanged: (val) {
                                 user.email = val;
                               },
@@ -160,7 +164,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
                               controller: TextEditingController(text: user.pwd),
                               onChanged: (val) {
@@ -219,7 +224,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
                               // controller:
                               // obscureText:,
@@ -280,20 +286,49 @@ class _RegisterPageState extends State<RegisterPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
-                              child: Text(
-                                '회원가입',
-                                style: TextStyle(color: Colors.black,),
-                                ),
-                              ),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 try {
-                                  save();
+                                  await save();
+                                  // 회원가입에 성공한 경우 다이얼로그 표시
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('회원가입 성공'),
+                                      content: Text('로그인 페이지로 이동합니다.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // 다이얼로그 닫기
+                                            Navigator.of(context).pop();
+                                            // 로그인 화면으로 이동
+                                            Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(builder: (context) => MyApp(),),
+                                            );
+                                          },
+                                          child: Text('확인'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 } catch (e) {
-                                  // save() 함수 실행 중 오류 발생 시 이 부분이 실행됩니다.
-                                  printError();
+                                  // 회원가입에 실패한 경우 다이얼로그 표시
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('회원가입 실패'),
+                                      content: Text('회원가입에 실패했습니다.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // 다이얼로그 닫기
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('확인'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 }
                               },
                               child: Icon(

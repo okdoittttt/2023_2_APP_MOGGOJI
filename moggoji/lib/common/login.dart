@@ -16,22 +16,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  // List<User>? users;
-  //
-  // getUsers() async {
-  //   users = await DatabaseService.getUsers();
-  //   print(users);
-  //   print("object");
-  //   Provider.of<UsersData>(context, listen: false).users = users!;
-  //   setState(() {
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getUsers();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -194,3 +178,21 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+
+// List<User>? users;
+//
+// getUsers() async {
+//   users = await DatabaseService.getUsers();
+//   print(users);
+//   print("object");
+//   Provider.of<UsersData>(context, listen: false).users = users!;
+//   setState(() {
+//   });
+// }
+
+// @override
+// void initState() {
+//   super.initState();
+//   getUsers();
+// }
