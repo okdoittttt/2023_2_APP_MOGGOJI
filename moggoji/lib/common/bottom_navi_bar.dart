@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moggoji/pages/club_list_page.dart';
+import 'package:moggoji/pages/survey_page.dart';
 import 'package:moggoji/pages/main_screen.dart';
 import 'package:moggoji/pages/more_page.dart';
 
@@ -19,15 +19,15 @@ class BottomNaviBar extends StatelessWidget {
         currentIndex: seletedIndex,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Club'),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Notice'),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Club'),
+          BottomNavigationBarItem(icon: Icon(Icons.description), label: 'Notice'),
           BottomNavigationBarItem(icon: Icon(Icons.more_horiz_outlined), label: 'More'),
         ],
         onTap: (int index){
           if(index == 0){
             Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
           } else if(index == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ClubListPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));
           } else if(index == 2){
 
           } else if(index == 3){

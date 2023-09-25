@@ -1,6 +1,7 @@
 package com.example.moggojiserver.User;
 
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,15 @@ public class UserController {
     public List<UserItem> getUser() { return userRepository.findAll(); }
 
     @PostMapping(value = "/register")
-    public UserItem register(@Valid @RequestBody UserItem userItem) { return  userRepository.save(userItem); }
+    public UserItem register(@Valid @RequestBody UserItem userItem) {
+        System.out.println(userItem);
+        return  userRepository.save(userItem);
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity login(@Valid @RequestBody UserItem userItem) {
+        return ResponseEntity.ok().body(null);
+    }
 
 //    @PostMapping(value = "/login")
 //    public ResponseEntity login() {
