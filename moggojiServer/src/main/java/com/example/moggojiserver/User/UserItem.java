@@ -31,7 +31,7 @@ public class UserItem {
         boolean checkPwd = pwd == input_pwd;
 
         return checkPwd;
-    }    
+    }
 //    =============================================================================================
 
     public long getNumber() {
