@@ -9,6 +9,7 @@ class RegistEventPage extends StatefulWidget {
 }
 
 class _RegistEventPageState extends State<RegistEventPage> {
+  DateTime? _selectedDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +73,19 @@ class _RegistEventPageState extends State<RegistEventPage> {
                       padding: const EdgeInsets.all(14.0),
                       /* 추후 날짜 선택으로 변경 */
                       child: TextFormField(
+                        // inputFormatters: [I],
                         keyboardType: TextInputType.datetime,
+                        // onTap: (){
+                        //   showDatePicker(context: context,
+                        //       initialDate: DateTime.now(),
+                        //       firstDate: DateTime(2000),
+                        //       lastDate: DateTime.now(),
+                        //   ).then((selectedDate){
+                        //     setState(() {
+                        //       _selectedDate = selectedDate;
+                        //     });
+                        //   });
+                        // },
                         decoration: InputDecoration(
                             labelText: "날짜",
                             hintText: "ex) 2023-09-08",
