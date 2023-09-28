@@ -4,7 +4,7 @@
             "outputFile": "com.example.moggoji.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/sonny/Document/2023_2_APP_MOGGOJI/moggoji/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/danielnam/flutter-workspace/2023_2_APP_MOGGOJI/moggoji/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

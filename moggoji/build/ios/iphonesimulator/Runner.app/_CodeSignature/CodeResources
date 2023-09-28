@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		Q+kXlw2tpjyxhnTYXcPbvmb5XB0=
+		q8DCN2eXHVUfjuZhR6kKUZpvaWg=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,23 +54,59 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		TmySswA3UVcmarGapUEr8NMivR0=
+		41xowskafkeYXr8EWij/d7ev0pw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		Bt8CO8ZZPLoyW0EFbdrijoJrNMI=
+		2gyPOcTfVpyRGEiWwMTf4rU8ID8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		cdxdAJC6yw5AWRHDsosCg+gE50k=
+		jIuNlW3+atzgaM5P4/dKI6PtpYs=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
-		vKJkVIcw+LGHFnKJGwrQwCREv68=
+		YawJdKKyg39xxUejL472u4s4ESQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
 		X1T889dzV3cG0wf+6NgvHNsSV90=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Black.ttf</key>
+		<data>
+		bhqNz7gSZdfFHuqIm8c38KSzM2g=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Bold.ttf</key>
+		<data>
+		ixiXn29A64pdaES2uULZ1vOMhFI=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-ExtraBold.ttf</key>
+		<data>
+		jSWYx2Mfe33mPgpfw5APa8Q/sp4=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-ExtraLight.ttf</key>
+		<data>
+		ZlM0vaL6L+Vver7YpvyH2SbbwGM=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Light.ttf</key>
+		<data>
+		ghr+JGLU6lytPWNccFpSPNHXmO8=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Medium.ttf</key>
+		<data>
+		vThBcF84WXOE8im3NB1XaX5bv2g=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Regular.ttf</key>
+		<data>
+		f/tj7mhmobNMNIrOdtZSlBbx4TE=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-SemiBold.ttf</key>
+		<data>
+		dTRhVOOtDRPtpCXWa2JfAH7wDxs=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Thin.ttf</key>
+		<data>
+		HPHhBxTQjFg/bnqdXX0D7XPRVuc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/logo.png</key>
 		<data>
@@ -86,7 +122,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		dWqgSsaj/8ZnTXVwqE0j3wqXpZg=
+		ruYZoooohTOUDOz6w6yllUnOwG0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -194,7 +230,7 @@
 		</data>
 		<key>Frameworks/path_provider_foundation.framework/path_provider_foundation</key>
 		<data>
-		KNOXBaWolO12N0mkhX3wzcntyKc=
+		NgfDxHKvXv+2+rrtoQvqb8P38UM=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -281,7 +317,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			75vwBPDK6KLsh4nwdv3o1IbvumLhqitExTyjTfV2HDA=
+			55HUhIMN5n7XpSIaCXEFWZjR91UqleWcu5TyscIGTBc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -295,28 +331,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9TkdxvYkPAUZDefiTTV1OcK6NUYz/5+noNXhSnhuqoU=
+			e3VrlcBTEGk5WR1O3GS/GO+YNZhl8iE+wwNqKCEiskQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kEtJargIi6KOnzTU7xdj40CyBCSCU5zMcKi2GqDhZD4=
+			9uYyzIuRz17NqvFu6Jt3v1xw3qJAEQv7zDo61uficko=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7TEZNOZPCzw8clooQWO9ay5l6SrL2gNDcR86I7T48+8=
+			PkYix5345ksGY93MDSRH1yO1fW/ujZnI9YhqpLcKlhk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zX4DZFvESy3Ue3y2JvUcTsv1Whl6t3JBYotHrBZfviE=
+			+mydXCFg5WHoQA++lWtjn+kSTqYJZ+fzOWFD0Al9v5w=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
@@ -324,6 +360,69 @@
 			<key>hash2</key>
 			<data>
 			u+jN7Qh6LLA7N6vuQ3TrzXm2QTGheYRytFPfvjTwoGM=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Black.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2YjmhCkoeBjpjeeng8EEE5DuOXbi9hlYGqOt7NWwMrc=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Bold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7g+3tDJe21AxW4G/s22/EqANtZbLQ/G5sdkNggx4i74=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-ExtraBold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			MqHXG+yc6s4sbEuE1vTVzmAcRZAjeW/pWj0LnGTVIkY=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-ExtraLight.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tpYRa3YClXp7zA8cX2Q/9Q/F3vgzYPCFD17EvvRY39s=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Light.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Ar6X4qg3u7Ks/ENuoHAoASw9mj9W1yLZg6gCbS1WCb0=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Medium.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			m4poADtY6+KCiZczYOD7shmQGDA7tS1ookBQkw3xh4w=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Regular.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			8ylSiTwzSOzOsbWXXpU8qhNvuhB+1AAxf+hlmo+0xQY=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-SemiBold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Bddx6iDPDoLC3e637HoQ7nSusQuqJgOstAfVsqWlW7c=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/fonts/Pretendard-Thin.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			RxpBZ9ejBrJJlSAqSwPTFsco8Cy23injwmkCqoUxrn4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/logo.png</key>
@@ -351,7 +450,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Fqheji3wjIxx5djO8izBrwDDzsAdcvoKDeCU8OvNgSk=
+			xpvNa3mFZzeZ0EARm6uKQXvv+U1kbR1+aArvo5/QOHk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -540,7 +639,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fTC5rXU/qKSeHFoo1kC9uEAfgMx8WBtqDZRpKnvF6xI=
+			OZAW22gkkVVYiJu4fTLFHWxhwWYCUOXl+0YtcdRwaZI=
 			</data>
 		</dict>
 	</dict>
