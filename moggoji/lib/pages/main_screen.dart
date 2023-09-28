@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:moggoji/pages/detail/regist_event_page.dart';
 import 'package:moggoji/pages/event_page.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:moggoji/pages/survey_page.dart';
 
 import '../common/bottom_navi_bar.dart';
+import '../models/schedule.dart';
+import '../service/globals.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,6 +19,26 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  List<Schedule> schedule = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSchedule(); // 데이터를 가져 올 함수
+  }
+
+  // 데이터를 가져 올 함수 정의
+  Future<List<Schedule>> fetchSchedule() async {
+    final response = await http.get(Uri.parse(TaskbaseURL));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      print(response.body);
+      return data.map((json) => Schedule.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load schedule');
+    }
+  }
 
   /* JSON 데이터 */
   var eventList = [
