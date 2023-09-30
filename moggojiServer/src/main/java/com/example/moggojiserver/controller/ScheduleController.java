@@ -4,6 +4,7 @@ import com.example.moggojiserver.model.ScheduleItem;
 import com.example.moggojiserver.repository.ScheduleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ScheduleController {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
-    @GetMapping
+    @GetMapping(produces="application/json; charset=utf8")
     public List<ScheduleItem> getSchedule() {
         return scheduleRepository.findAll();
     }
