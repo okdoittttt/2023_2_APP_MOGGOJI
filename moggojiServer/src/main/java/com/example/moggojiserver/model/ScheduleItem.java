@@ -1,4 +1,4 @@
-package com.example.moggojiserver.Schedule;
+package com.example.moggojiserver.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +31,12 @@ public class ScheduleItem {
 
     @NotNull(message = "Date is required")
     private Date date;
+
+    @NotNull(message = "content is required")
+    private String content;
+
+    @NotNull(message = "fee is required")
+    private int fee;
 
     public ScheduleItem() {
     }
@@ -75,5 +81,21 @@ public class ScheduleItem {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getFee() {
+        return fee;
+    }
+
+    public void setFee(int fee) {
+        this.fee = fee;
     }
 }

@@ -1,5 +1,7 @@
-package com.example.moggojiserver.Schedule;
+package com.example.moggojiserver.controller;
 
+import com.example.moggojiserver.model.ScheduleItem;
+import com.example.moggojiserver.repository.ScheduleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,7 @@ public class ScheduleController {
         return scheduleRepository.findAll();
     }
 
-    @PostMapping(value = "/addTask")
+    @PostMapping(value = "/addSchedule")
     public ScheduleItem addTask(@Valid @RequestBody ScheduleItem scheduleItem) {
         System.out.print(scheduleItem);
         return scheduleRepository.save(scheduleItem);
