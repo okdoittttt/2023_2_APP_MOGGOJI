@@ -1,8 +1,6 @@
 package com.example.moggojiserver.User;
 
-import com.example.moggojiserver.Schedule.ScheduleItem;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +28,9 @@ public class UserController {
         return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping(value = "/getSome/{email}")
-    public List<UserItem> getUserByEmail(@PathVariable(name = "email") String email) {
+
+    @GetMapping(value = "/getUserByEmail/{email}")
+    public List<UserItem> findUserByEmail(@PathVariable String email) {
         // email 값을 이용하여 userRepository에서 특정 데이터를 조회
         System.out.println(email);
         List<UserItem> users = userRepository.findByEmail(email);
@@ -39,6 +38,7 @@ public class UserController {
         // 조회된 데이터 반환
         return users;
     }
+
 
 
 
