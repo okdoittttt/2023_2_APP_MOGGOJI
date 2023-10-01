@@ -70,8 +70,7 @@ class _RegistEventPageState extends State<RegistEventPage> {
                                   onPressed: () {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) => MainScreen()));
+                                        MaterialPageRoute(builder: (context) => MainScreen()));
                                   },
                                   child: Text("확인"))
                             ],
