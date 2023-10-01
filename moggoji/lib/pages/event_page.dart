@@ -15,8 +15,20 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("행사 일정"),
-        centerTitle: true,
+        centerTitle:true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 78.0),
+              child: Text("행사 일정"),
+            ),
+            TextButton(onPressed: (){}, child: Text("관리",
+                style: TextStyle(fontSize: 15),
+              )
+            )
+          ],
+        ),
       ),
       body: ListViewPage(),
       bottomNavigationBar: BottomNaviBar(),

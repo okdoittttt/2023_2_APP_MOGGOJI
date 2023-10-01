@@ -17,55 +17,6 @@ class ListViewPage extends StatefulWidget {
 class _ListViewPageState extends State<ListViewPage> {
   List<Schedule> schedules = [];
 
-  /* JSON 데이터 */
-  var eventList = [
-    {
-      "title":"아이디어 발표",
-      "date":"2023.09.15. 18:30",
-      "location":"누리관 2318호",
-      "description":"아이디어 발표",
-      "participationFee":"없음",
-      "numberOfParticipant":"33",
-      "finish":"no",
-    },
-    {
-      "title":"노션 세미나",
-      "date":"2023.09.12. 19:00",
-      "location":"향파관",
-      "description":"노션 사용법 강의",
-      "participationFee":"의지",
-      "numberOfParticipant":"35",
-      "finish":"yes",
-    },
-    {
-      "title":"깃 세미나",
-      "date":"2023.09.11. 19:00",
-      "location":"향파관",
-      "description":"Git CLI 사용법 강의",
-      "participationFee":"열정",
-      "numberOfParticipant":"30",
-      "finish":"yes",
-    },
-    {
-      "title":"개강총회",
-      "date":"2023.09.08. 18:30",
-      "location":"창의관 303호",
-      "description":"개강총회",
-      "participationFee":"패기",
-      "numberOfParticipant":"55",
-      "finish":"yes",
-    },
-    {
-      "title":"개강총회",
-      "date":"2023.09.08. 18:30",
-      "location":"창의관 303호",
-      "description":"개강총회",
-      "participationFee":"패기",
-      "numberOfParticipant":"55",
-      "finish":"yes",
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -98,20 +49,22 @@ class _ListViewPageState extends State<ListViewPage> {
         final schedule = schedules[index];
         DateTime currentDate = DateTime.now();
         DateTime scheduleDate = DateTime.parse(schedule.date);
-        Duration diffrenceDate = scheduleDate.difference(currentDate);
+        Duration differenceDate = scheduleDate.difference(currentDate);
 
         print("=================================");
         print("=================================");
         print("=================================");
-        print(diffrenceDate);
+        print('${schedule.title} / ${differenceDate}');
 
-        String dDayText;
-        if(diffrenceDate.inDays > 0) {
-          dDayText = 'D-${diffrenceDate.inDays}';
-        } else if (diffrenceDate.inDays == 0) {
+        String dDayText = '';
+        if(differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 1) {
+          dDayText = 'D-1';
+        } else if(differenceDate.inDays > 0) {
+          dDayText = 'D-${(differenceDate.inHours/24).round()}';
+        } else if (differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 0) {
           dDayText = 'D-Day';
         } else {
-          dDayText = 'D+${-diffrenceDate.inDays}';
+          dDayText = 'D+${-(differenceDate.inHours/24).round()}';
         }
 
         return Container(
@@ -140,7 +93,7 @@ class _ListViewPageState extends State<ListViewPage> {
                       children: [
                         Row(
                           children: [
-                            Text(DateFormat("MM-dd").format(DateTime.parse(schedule.date)),
+                            Text(DateFormat("MM/dd").format(DateTime.parse(schedule.date)),
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -173,7 +126,7 @@ class _ListViewPageState extends State<ListViewPage> {
                       ],
                     ),
                     trailing: ElevatedButton(
-                      onPressed: eventList[index]['finish'] == "yes"
+                      onPressed: differenceDate.inSeconds <= 0
                           ? null
                           : () {},
                       style: ButtonStyle(
@@ -207,7 +160,7 @@ class _ListViewPageState extends State<ListViewPage> {
                           ),
                         ),
                         // title: Text(schedule.date),
-                        title: Text(DateFormat("yyyy-MM-dd").format(DateTime.parse(schedule.date)),),
+                        title: Text(DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(schedule.date)),),
                       ),
                     ),
                     SizedBox(
@@ -252,6 +205,7 @@ class _ListViewPageState extends State<ListViewPage> {
                         title: Text(schedule.fee.toString()),
                       ),
                     ),
+                    /* 추후 DB에서 인원 수 가져올 예정 */
                     SizedBox(
                       height: 30,
                       child: ListTile(
@@ -264,7 +218,7 @@ class _ListViewPageState extends State<ListViewPage> {
                           ),
                         ),
                         title: Text(
-                            "${eventList[index]['numberOfParticipant']!} 명"),
+                            "${schedule.date.substring(11,13)} 명"),
                       ),
                     ),
                   ],
