@@ -134,7 +134,7 @@ class _RegistEventPageState extends State<RegistEventPage> {
                           keyboardType: TextInputType.datetime,
                           decoration: InputDecoration(
                             labelText: "날짜",
-                            hintText: "ex) 2023-09-08 18:30",
+                            hintText: "ex) 2023-09-08 17:00",
                             hintStyle: TextStyle(color: Colors.grey),
                           ),
                         ),

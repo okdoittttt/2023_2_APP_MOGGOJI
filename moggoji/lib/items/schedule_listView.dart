@@ -54,7 +54,7 @@ class _ListViewPageState extends State<ListViewPage> {
         print("=================================");
         print("=================================");
         print("=================================");
-        print('${schedule.title} / ${differenceDate}');
+        print('${schedule.title} : ${differenceDate}');
 
         String dDayText = '';
         if(differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 1) {
