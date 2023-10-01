@@ -64,18 +64,18 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
               return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 8, 0, 8),
                   child: Container(
-                    width: 200,
+                    width: 180,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x430F1113),
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.deepPurpleAccent.shade100,
+                              blurRadius: 5,
+                              offset: Offset(0, 1)
+                          )
+                        ]
                     ),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
@@ -84,7 +84,7 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Hero(
-                            tag: 'locationImage',
+                            tag: 'locationImage$index',
                             transitionOnUserGestures: true,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
@@ -129,7 +129,7 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(4, 4, 0, 0),
                                 child: Text(
-                                  DateFormat("MM-dd").format(DateTime.parse(schedule.date)),
+                                  DateFormat("MM/dd").format(DateTime.parse(schedule.date)),
                                   style: TextStyle(
                                     fontSize: 13
                                   ),
