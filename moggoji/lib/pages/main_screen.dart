@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:moggoji/items/schedule_main_screen.dart';
 import 'package:moggoji/pages/detail/regist_event_page.dart';
 import 'package:moggoji/pages/event_page.dart';
 import 'package:moggoji/pages/notice_page.dart';
@@ -133,6 +135,8 @@ class _MainScreenState extends State<MainScreen> {
               margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
               child: Column(
                 children: [
+                  Text("행사일정"),
+                  MainScreenSchedule(),
                   Container(
                     margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
                     child: Column(
