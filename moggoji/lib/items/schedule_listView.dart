@@ -54,7 +54,7 @@ class _ListViewPageState extends State<ListViewPage> {
         print("=================================");
         print("=================================");
         print("=================================");
-        print('${schedule.title} : ${differenceDate}');
+        print('${schedule.title} : $differenceDate');
 
         String dDayText = '';
         if(differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 1) {
@@ -65,6 +65,31 @@ class _ListViewPageState extends State<ListViewPage> {
           dDayText = 'D-Day';
         } else {
           dDayText = 'D+${-(differenceDate.inHours/24).round()}';
+        }
+
+        String weekDayText ='';
+        switch (scheduleDate.weekday) {
+          case 1:
+            weekDayText = '월';
+            break;
+          case 2:
+            weekDayText = '화';
+            break;
+          case 3:
+            weekDayText = '수';
+            break;
+          case 4:
+            weekDayText = '목';
+            break;
+          case 5:
+            weekDayText = '금';
+            break;
+          case 6:
+            weekDayText = '토';
+            break;
+          default:
+            weekDayText = '일';
+            break;
         }
 
         return Container(
@@ -93,7 +118,7 @@ class _ListViewPageState extends State<ListViewPage> {
                       children: [
                         Row(
                           children: [
-                            Text(DateFormat("MM/dd").format(DateTime.parse(schedule.date)),
+                            Text('${DateFormat("MM/dd").format(DateTime.parse(schedule.date))}($weekDayText)',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -160,7 +185,7 @@ class _ListViewPageState extends State<ListViewPage> {
                           ),
                         ),
                         // title: Text(schedule.date),
-                        title: Text(DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse(schedule.date)),),
+                        title: Text('${DateFormat("yy-MM-dd").format(DateTime.parse(schedule.date))}($weekDayText) ${DateFormat("HH:mm").format(DateTime.parse(schedule.date))}',),
                       ),
                     ),
                     SizedBox(
