@@ -23,5 +23,4 @@ public class NoticeController {
         return noticeRepository.save(noticeItem);
     }
 
-
 }
