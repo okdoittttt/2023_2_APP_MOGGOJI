@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:moggoji/service/globals.dart';
 
-import '../../models/notice.dart';
+import '../lib/models/notice.dart';
 
 class RegistNoticePage extends StatefulWidget {
   const RegistNoticePage({super.key});
