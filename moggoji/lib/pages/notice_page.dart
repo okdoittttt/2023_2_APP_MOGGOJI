@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
+import 'package:moggoji/pages/detail/regist_notice_page.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({super.key});
@@ -9,7 +10,6 @@ class NoticePage extends StatefulWidget {
 }
 
 class _NoticePageState extends State<NoticePage> {
-
   @override
   void initState() {
     super.initState();
@@ -20,6 +20,23 @@ class _NoticePageState extends State<NoticePage> {
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 78.0),
+                  child: Text("공지 사항"),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegistNoticePage()));
+                    },
+                    child: Text("관리", style: TextStyle(fontSize: 15))
+                )
+              ],
+            )),
         body: SafeArea(
           top: true,
           child: Column(
@@ -64,7 +81,7 @@ class _NoticePageState extends State<NoticePage> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Search listings...',
-                                  filled: true,
+                                  filled: false,
                                 ),
                               ),
                             ),
@@ -76,605 +93,78 @@ class _NoticePageState extends State<NoticePage> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment(0, 0),
-                      child: TabBar(
-                        labelColor: Colors.white,
-                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-                        tabs: [
-                          Tab(
-                            text: 'Homes',
-                            icon: Icon(
-                              Icons.home_filled,
+                child: DefaultTabController(
+                  length: 3,
+                  initialIndex: 0,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment(0, 0),
+                        child: TabBar(
+                          mouseCursor: null,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          indicatorColor: Colors.black,
+                          tabs: [
+                            Tab(
+                              text: '주요공지',
+                              icon: Icon(
+                                Icons.food_bank,
+                              ),
                             ),
-                          ),
-                          Tab(
-                            text: 'Beachfront',
-                            icon: Icon(
-                              Icons.beach_access_rounded,
+                            Tab(
+                              text: '인원모집',
+                              icon: Icon(
+                                Icons.group,
+                              ),
                             ),
-                          ),
-                          Tab(
-                            text: 'Nature',
-                            icon: Icon(
-                              Icons.nature_people,
+                            Tab(
+                              text: '정보공유',
+                              icon: Icon(
+                                Icons.lightbulb,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                ListView(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach&9',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach&5',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                      SizedBox(
+                        height: 10,
+                      ), // TabBar()와 TabBarView 사이 거리 조정
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemBuilder: (context, index) {
+                                return Text("TEST");
+                              },
                             ),
-                          ),
-                          SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                ListView(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach&4',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemBuilder: (context, index) {
+                                return Text("test");
+                              },
                             ),
-                          ),
-                          SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                ListView(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach&7',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 12),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 8, 16, 12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                                child: Image.network(
-                                                  'https://source.unsplash.com/random/1280x720?beach&9',
-                                                  width: double.infinity,
-                                                  height: 230,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Maidstone, San Antonio, Tx.',
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 0, 0, 0),
-                                                    child: Text(
-                                                      '\$210/night',
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 0, 16, 4),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '32 miles away',
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        16, 4, 4, 0),
-                                                    child: Text(
-                                                      '4.25',
-                                                    ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemBuilder: (context, index) {
+                                return Text("ttt");
+                              },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
+        bottomNavigationBar: BottomNaviBar(),
       ),
     );
   }
