@@ -23,4 +23,13 @@ public class NoticeController {
         return noticeRepository.save(noticeItem);
     }
 
+    @GetMapping(value = "getNoticeByCategory/{category}")
+    public List<NoticeItem> findNoticeByCategory(@PathVariable String category) {
+        System.out.println(category);
+        List<NoticeItem> notices = noticeRepository.findByCategory(category);
+
+        return notices;
+    }
+
+
 }
