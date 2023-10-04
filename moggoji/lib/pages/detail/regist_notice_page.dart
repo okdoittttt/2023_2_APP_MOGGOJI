@@ -23,7 +23,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
       content: '',
       writer: 'sonny',
       date: '',
-      category: '주요공지');
+      category: '');
 
   Future save() async {
     var res = await http.post(Uri.parse(addNotice),
@@ -164,7 +164,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                               controller:
                                   TextEditingController(text: notice.category),
                               onChanged: (val) {
-                                notice.category = '주요공지';
+                                notice.category = val;
                               },
                               validator: (value) {
                                 if (value!.isEmpty) {

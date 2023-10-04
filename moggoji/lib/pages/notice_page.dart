@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
+import 'package:moggoji/items/notice_listView.dart';
 import 'package:moggoji/pages/detail/regist_notice_page.dart';
 
 class NoticePage extends StatefulWidget {
@@ -10,6 +11,9 @@ class NoticePage extends StatefulWidget {
 }
 
 class _NoticePageState extends State<NoticePage> {
+  // TabBar Keyword
+  String documentName = 'a';
+
   @override
   void initState() {
     super.initState();
@@ -125,6 +129,21 @@ class _NoticePageState extends State<NoticePage> {
                               ),
                             ),
                           ],
+                          onTap: (index) {
+                            if(index == 0) {
+                              setState(() {
+                                documentName = 'a';
+                              });
+                            } else if(index == 1) {
+                              setState(() {
+                                documentName = 'b';
+                              });
+                            } else {
+                              setState(() {
+                                documentName = 'c';
+                              });
+                            }
+                          },
                         ),
                       ),
                       SizedBox(
@@ -137,21 +156,21 @@ class _NoticePageState extends State<NoticePage> {
                               padding: EdgeInsets.zero,
                               itemCount: 1, // 데이터 개수에 맞게 조정
                               itemBuilder: (context, index) {
-                                return Text("TEST");
+                                return NoticeListView(documentName: documentName);
                               },
                             ),
                             ListView.builder(
                               padding: EdgeInsets.zero,
                               itemCount: 1, // 데이터 개수에 맞게 조정
                               itemBuilder: (context, index) {
-                                return Text("test");
+                                return NoticeListView(documentName: documentName);
                               },
                             ),
                             ListView.builder(
                               padding: EdgeInsets.zero,
                               itemCount: 1, // 데이터 개수에 맞게 조정
                               itemBuilder: (context, index) {
-                                return Text("ttt");
+                                return NoticeListView(documentName: documentName);
                               },
                             ),
                           ],
