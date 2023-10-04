@@ -135,11 +135,6 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
                                   ),
                                 ),
                               ),
-                              Icon(
-                                Icons.navigate_next,
-                                color: Colors.black,
-                                size: 24,
-                              ),
                             ],
                           ),
                         ],

@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
                       style: ButtonStyle(
                           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
-                              )
+                          )
                           )
                       ),
                       child: Text("행사 등록", style: TextStyle(letterSpacing: 1),)),
@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
                       style: ButtonStyle(
                           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
-                              )
+                          )
                           )
                       ),
                       child: Text("공지 등록", style: TextStyle(letterSpacing: 1),)),
@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                       style: ButtonStyle(
                           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
-                              )
+                          )
                           )
                       ),
                       child: Text("설문 등록", style: TextStyle(letterSpacing: 1),)),
@@ -107,15 +107,15 @@ class _MainScreenState extends State<MainScreen> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: 2
-                                ),
                             ),
+                          ),
                           trailing: TextButton(
-                              onPressed:(){Navigator.push(context, MaterialPageRoute(builder: (context) => NoticePage()));} ,
-                              child: Text("더보기",
+                            onPressed:(){Navigator.push(context, MaterialPageRoute(builder: (context) => NoticePage()));} ,
+                            child: Text("더보기",
                               style: TextStyle(
-                                color: Colors.grey
-                                  ),
+                                  color: Colors.grey
                               ),
+                            ),
                           ),
                         )
                       ],
@@ -174,37 +174,37 @@ class _MainScreenState extends State<MainScreen> {
                                 padding: const EdgeInsets.symmetric(horizontal: 5),
                                 child: Text("(76명)",
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
                                   ),),
                               )
                             ],
                           ),
                           trailing: TextButton(
-                              onPressed:(){} ,
-                              child: Text("더보기",
-                                style: TextStyle(
-                                    color: Colors.grey
-                                  ),
+                            onPressed:(){} ,
+                            child: Text("더보기",
+                              style: TextStyle(
+                                  color: Colors.grey
                               ),
+                            ),
                           ),
                         )
                       ],
                     ),
                   ),
                   Container(
-                    height: 40,
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("프로필1"),
-                        Text("프로필2"),
-                        Text("프로필3"),
-                        Text("프로필4"),
-                        Text("프로필5"),
-                    ],
-                    )
+                      height: 40,
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("프로필1"),
+                          Text("프로필2"),
+                          Text("프로필3"),
+                          Text("프로필4"),
+                          Text("프로필5"),
+                        ],
+                      )
                   ),
                 ],
               ),
@@ -232,7 +232,7 @@ class _MainScreenState extends State<MainScreen> {
                               child: Text("더보기",
                                 style: TextStyle(
                                     color: Colors.grey
-                                  ),
+                                ),
                               )
                           ),
                         )
