@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Pretendard',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -20,16 +21,5 @@ class MyApp extends StatelessWidget {
       home: const Login(),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ChangeNotifierProvider<UsersData>(
-  //     create: (context) => UsersData(),
-  //     child: const MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       home: LoginTest(),
-  //     ),
-  //   );
-  // }
 }
 

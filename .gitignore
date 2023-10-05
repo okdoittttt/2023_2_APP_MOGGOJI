@@ -1,0 +1,17 @@
+.DS_Store
+
+# Flutter
+.flutter-plugins-dependencies
+.flutter-plugins
+analysis_options.yaml
+pubspec.lock
+.dart_tool
+.idea
+android
+build
+ios
+linux
+macos
+web
+windows
+moggoji.iml
