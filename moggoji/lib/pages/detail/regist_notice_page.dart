@@ -42,51 +42,51 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.symmetric(horizontal: 78.0),
-                  child: Text("공지 등록"),
-                ),
-                TextButton(
-                    onPressed: () {
-                      save();
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          appBar: AppBar(
+              centerTitle: true,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.symmetric(horizontal: 78.0),
+                    child: Text("공지 등록"),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        save();
 
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text("공지 등록이 완료 되었습니다.",
-                              style: TextStyle(
-                                  fontSize: 23
-                              ),),
-                            content: Text("메인 페이지로 이동합니다."),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => NoticePage()));
-                                  },
-                                  child: Text("확인"))
-                            ],
-                          ));
-                    },
-                    child: Text(
-                      "등록",
-                      style: TextStyle(fontSize: 15),
-                    ))
-              ],
-            )),
-        body: GestureDetector(
-          onTap: (){
-            FocusScope.of(context).unfocus();
-          },
-          child: SingleChildScrollView(
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("공지 등록이 완료 되었습니다.",
+                                style: TextStyle(
+                                    fontSize: 23
+                                ),),
+                              content: Text("메인 페이지로 이동합니다."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => NoticePage()));
+                                    },
+                                    child: Text("확인"))
+                              ],
+                            ));
+                      },
+                      child: Text(
+                        "등록",
+                        style: TextStyle(fontSize: 15),
+                      ))
+                ],
+              )),
+          body: SingleChildScrollView(
             child: Container(
               margin: EdgeInsetsDirectional.symmetric(
                   horizontal: 20.0, vertical: 30.0),
@@ -196,7 +196,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                 ],
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
