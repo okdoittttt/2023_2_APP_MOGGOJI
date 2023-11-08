@@ -113,7 +113,7 @@ class _NoticePageState extends State<NoticePage> {
                             Tab(
                               text: '주요공지',
                               icon: Icon(
-                                Icons.food_bank,
+                                Icons.receipt_long,
                               ),
                             ),
                             Tab(

@@ -17,6 +17,8 @@ class RegistNoticePage extends StatefulWidget {
 
 class _RegistNoticePageState extends State<RegistNoticePage> {
   final _registNoteKey = GlobalKey<FormState>();
+  List<bool> _selections1 = List.generate(3, (index) => false);
+
   Notice notice = Notice(
       number: 0,
       title: '',
@@ -50,7 +52,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.symmetric(horizontal: 78.0),
+                      EdgeInsetsDirectional.symmetric(horizontal: 78.0),
                       child: Text("공지 등록"),
                     ),
                     TextButton(
@@ -89,6 +91,149 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ToggleButtons(children: <Widget>[
+                      Icon(Icons.ac_unit),
+                      Icon(Icons.ac_unit),
+                      Icon(Icons.ac_unit),
+                    ],onPressed: (int index) {
+                      setState(() {
+                        _selections1[index] = !_selections1[index];
+                      });
+                    }, isSelected: _selections1),
+                    Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: Container(
+                                  width: 120,
+                                  constraints: BoxConstraints(
+                                    maxWidth: 500,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.purple,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 16, 8, 16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.receipt_long,
+                                          color: Colors.purple,
+                                          size: 36,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0, 12, 0, 0),
+                                          child: Text(
+                                            '주요공지',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: Container(
+                                  width: 120,
+                                  constraints: BoxConstraints(
+                                    maxWidth: 500,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.purple,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 16, 8, 16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.group,
+                                          color: Colors.purple,
+                                          size: 36,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0, 12, 0, 0),
+                                          child: Text(
+                                            '인원모집',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: Container(
+                                  width: 120,
+                                  constraints: BoxConstraints(
+                                    maxWidth: 500,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: Colors.purple,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 16, 8, 16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.lightbulb,
+                                          color: Colors.purple,
+                                          size: 36,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0, 12, 0, 0),
+                                          child: Text(
+                                            '정보공유',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ),
+                        ]
+                    ),
                     Form(
                       key: _registNoteKey,
                       child: Column(
@@ -97,7 +242,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                             padding: const EdgeInsets.all(14.0),
                             child: TextFormField(
                               controller:
-                                  TextEditingController(text: notice.title),
+                              TextEditingController(text: notice.title),
                               onChanged: (val) {
                                 notice.title = val;
                               },
@@ -119,7 +264,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                             /* 추후 날짜 선택으로 변경 */
                             child: TextFormField(
                               controller:
-                                  TextEditingController(text: notice.date),
+                              TextEditingController(text: notice.date),
                               onChanged: (val) {
                                 notice.date = val;
                               },
@@ -141,7 +286,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                             padding: const EdgeInsets.all(14.0),
                             child: TextFormField(
                               controller:
-                                  TextEditingController(text: notice.content),
+                              TextEditingController(text: notice.content),
                               onChanged: (val) {
                                 notice.content = val;
                               },
@@ -162,7 +307,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                             padding: const EdgeInsets.all(14.0),
                             child: TextFormField(
                               controller:
-                                  TextEditingController(text: notice.category),
+                              TextEditingController(text: notice.category),
                               onChanged: (val) {
                                 notice.category = val;
                               },
