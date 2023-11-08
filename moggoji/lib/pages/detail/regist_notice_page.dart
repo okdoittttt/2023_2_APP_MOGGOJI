@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:moggoji/service/globals.dart';
@@ -59,26 +60,25 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                   ),
                   TextButton(
                       onPressed: () {
-                        save();
-
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text("공지 등록이 완료 되었습니다.",
-                                style: TextStyle(
-                                    fontSize: 23
-                                ),),
-                              content: Text("메인 페이지로 이동합니다."),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => NoticePage()));
-                                    },
-                                    child: Text("확인"))
-                              ],
-                            ));
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(
+                            title: Text("공지 등록하기"),
+                            content: Text("작성하신 내용을 등록하시겠습니까?"),
+                            actions: <Widget>[
+                              TextButton(onPressed: () =>
+                                  Navigator.pop(context, 'Cancel'),
+                                  child: Text("취소")
+                              ),
+                              TextButton(onPressed: () {
+                                save();
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => NoticePage()));
+                              },
+                                  child: Text("등록")
+                              )
+                            ],
+                          );
+                        });
                       },
                       child: Text(
                         "등록",
@@ -196,7 +196,9 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                 ],
               ),
             ),
-          )),
+          ),
+        bottomNavigationBar: BottomNaviBar(),
+      ),
     );
   }
 }

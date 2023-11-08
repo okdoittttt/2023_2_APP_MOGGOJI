@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/models/schedule.dart';
+import 'package:moggoji/pages/event_page.dart';
 import 'package:moggoji/pages/main_screen.dart';
 import 'package:moggoji/service/globals.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -60,26 +62,25 @@ class _RegistEventPageState extends State<RegistEventPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    save();
-
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              title: Text("행사 등록이 완료 되었습니다.",
-                                style: TextStyle(
-                                  fontSize: 23
-                                ),),
-                              content: Text("메인 페이지로 이동합니다."),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => MainScreen()));
-                                    },
-                                    child: Text("확인"))
-                              ],
-                            ));
+                    showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: Text("행사 등록하기"),
+                        content: Text("작성하신 내용을 등록하시겠습니까?"),
+                        actions: <Widget>[
+                          TextButton(onPressed: () =>
+                              Navigator.pop(context, 'Cancel'),
+                              child: Text("취소")
+                          ),
+                          TextButton(onPressed: () {
+                            save();
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => EventPage()));
+                          },
+                              child: Text("등록")
+                          )
+                        ],
+                      );
+                    });
                   },
                   child: Text(
                     "등록",
@@ -138,9 +139,6 @@ class _RegistEventPageState extends State<RegistEventPage> {
                                   },
                                   currentTime: DateTime.now(), locale: LocaleType.ko);
                               },
-                            // onChanged: (val) {
-                            //   schedule.date = val;
-                            // },
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Date is Empty!";
@@ -224,7 +222,9 @@ class _RegistEventPageState extends State<RegistEventPage> {
                 ],
               ),
             ),
-          )),
+          ),
+        bottomNavigationBar: BottomNaviBar(),
+      ),
     );
   }
 }
