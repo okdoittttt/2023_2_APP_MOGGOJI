@@ -64,8 +64,8 @@ class _NoticeListViewState extends State<NoticeListView> {
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 7,
-                    color: Color(0x2F1D2429),
-                    offset: Offset(0, 3),
+                    color: Colors.blueAccent.shade100,
+                    offset: Offset(3, 5),
                   )
                 ],
                 borderRadius: BorderRadius.circular(8),
