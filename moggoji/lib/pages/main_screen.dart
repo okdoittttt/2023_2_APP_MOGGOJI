@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:moggoji/items/schedule_main_screen.dart';
+import 'package:moggoji/items/show_dialog_regist_survey.dart';
 import 'package:moggoji/pages/detail/regist_event_page.dart';
+import 'package:moggoji/pages/detail/regist_notice_page.dart';
 import 'package:moggoji/pages/event_page.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:moggoji/pages/survey_page.dart';
@@ -71,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       child: Text("행사 등록", style: TextStyle(letterSpacing: 1),)),
                   ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => RegistNoticePage()));},
                       style: ButtonStyle(
                           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
@@ -80,7 +82,12 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       child: Text("공지 등록", style: TextStyle(letterSpacing: 1),)),
                   ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        setState(() { showDialog(context: context, builder: (context){
+                        return ShowDialogRegistSurvey();
+                      });
+                      });
+                        },
                       style: ButtonStyle(
                           shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)
