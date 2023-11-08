@@ -41,6 +41,8 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
     print(res.body);
   }
 
+  String selectedOption = "주요공지";
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -169,27 +171,40 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: TextFormField(
-                          controller:
-                          TextEditingController(text: notice.category),
-                          onChanged: (val) {
-                            notice.category = val;
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "category is Empty!";
-                            }
-                            return "";
-                          },
-                          decoration: InputDecoration(
-                            labelText: "카테고리",
-                            hintText: "추후 카테고리 선택으로 디자인 변경",
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                      ),
+                      Row(
+                        children: <Widget>[
+                          Radio(value: '주요공지',
+                              groupValue: selectedOption,
+                              onChanged: (value) {
+                            setState(() {
+                              selectedOption = value!;
+                              notice.category = value;
+                              print(selectedOption);
+                            });
+                              }),
+                          Text('주요공지'),
+                          Radio(value: '인원모집',
+                              groupValue: selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedOption = value!;
+                                  notice.category = value;
+                                  print(selectedOption);
+                                });
+                              }),
+                          Text('인원모집'),
+                          Radio(value: '정보공유',
+                              groupValue: selectedOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedOption = value!;
+                                  notice.category = value;
+                                  print(selectedOption);
+                                });
+                              }),
+                          Text('정보공유')
+                        ],
+                      )
                     ],
                   ),
                 ),
