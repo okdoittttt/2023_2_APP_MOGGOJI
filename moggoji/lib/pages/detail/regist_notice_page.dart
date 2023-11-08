@@ -72,9 +72,26 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                                 child: Text("취소")
                             ),
                             TextButton(onPressed: () {
-                              save();
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => NoticePage()));
+                              if(notice.title != '' && notice.content != '' && notice.date != '') {
+                                save();
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => NoticePage()));
+                              } else {
+                                Navigator.of(context).pop();
+                                showDialog(context: context, builder: (context){
+                                  return AlertDialog(
+                                    icon: Icon(Icons.warning_rounded, size: 50,color: Colors.red),
+                                    title: Text("미입력!!"),
+                                    content: Text("항목들을 모두 작성해주세요!"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: Text("돌아가기"))
+                                    ],
+                                  );
+                                });
+                              }
                             },
                                 child: Text("등록")
                             )
@@ -176,11 +193,11 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                           Radio(value: '주요공지',
                               groupValue: selectedOption,
                               onChanged: (value) {
-                            setState(() {
-                              selectedOption = value!;
-                              notice.category = value;
-                              print(selectedOption);
-                            });
+                                setState(() {
+                                  selectedOption = value!;
+                                  notice.category = value;
+                                  print(selectedOption);
+                                });
                               }),
                           Text('주요공지'),
                           Radio(value: '인원모집',
