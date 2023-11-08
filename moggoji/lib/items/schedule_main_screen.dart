@@ -59,7 +59,7 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
             scrollDirection: Axis.horizontal,
 
             itemBuilder: (BuildContext context, int index) {
-              final schedule = schedules[index];
+              final schedule = schedules[schedules.length - index - 1];
 
               return Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 8, 0, 8),
@@ -71,7 +71,7 @@ class _MainScreenScheduleState extends State<MainScreenSchedule> {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.deepPurpleAccent.shade100,
+                              color: Colors.blueAccent.shade100,
                               blurRadius: 5,
                               offset: Offset(0, 1)
                           )

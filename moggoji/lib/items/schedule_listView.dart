@@ -46,13 +46,11 @@ class _ListViewPageState extends State<ListViewPage> {
           decelerationRate: ScrollDecelerationRate.normal),
       itemCount: schedules.length,
       itemBuilder: (BuildContext context, int index) {
-        final schedule = schedules[index];
+        final schedule = schedules[schedules.length - index - 1];
         DateTime currentDate = DateTime.now();
         DateTime scheduleDate = DateTime.parse(schedule.date);
         Duration differenceDate = scheduleDate.difference(currentDate);
 
-        print("=================================");
-        print("=================================");
         print("=================================");
         print('${schedule.title} : $differenceDate');
 
@@ -98,7 +96,7 @@ class _ListViewPageState extends State<ListViewPage> {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.deepPurpleAccent.shade100,
+                    color: Colors.blueAccent.shade100,
                     blurRadius: 5,
                     offset: Offset(2.2, 2.2)
                 )
