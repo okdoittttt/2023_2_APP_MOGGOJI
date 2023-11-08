@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:moggoji/pages/detail/detail_notice_page.dart';
 
 import '../models/notice.dart';
 import '../service/globals.dart';
@@ -29,6 +30,7 @@ class _NoticeListViewState extends State<NoticeListView> {
   Future<void> fetchNotices() async {
     String resultNoticeURL = '$findNoticeByCategoryURL/${widget.documentName}'; // documentName 사용
     print(resultNoticeURL);
+    print(widget.documentName);
 
     final response = await http.get(Uri.parse(resultNoticeURL));
 
@@ -46,77 +48,93 @@ class _NoticeListViewState extends State<NoticeListView> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(
-            decelerationRate: ScrollDecelerationRate.normal),
-        shrinkWrap: true,
-        itemCount: notices.length,
-        itemBuilder: (BuildContext context, int index) {
-          final notice = notices[index];
+    return GestureDetector(
+      child: SizedBox(
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.normal),
+          shrinkWrap: true,
+          itemCount: notices.length,
+          itemBuilder: (BuildContext context, int index) {
+            final notice = notices[index];
 
-          return Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 7,
-                    color: Colors.blueAccent.shade100,
-                    offset: Offset(3, 5),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(8),
-              ),
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailNoticePage(
+                      title: notice.title,
+                      category: notice.category,
+                      content: notice.content,
+                      date: notice.date,
+                      writer: notice.writer,
+                    ))
+                );
+              },
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'https://avatars.githubusercontent.com/u/39268032?s=200&v=4',
-                        width: double.infinity,
-                        height: 160,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            notice.title,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                          Text(notice.writer)
-                        ],
-                      ),
-                    ),
-                    Row(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 7,
+                        color: Colors.blueAccent.shade100,
+                        offset: Offset(3, 5),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
-                          child: Text(
-                            notice.content,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            'https://avatars.githubusercontent.com/u/39268032?s=200&v=4',
+                            width: double.infinity,
+                            height: 160,
+                            fit: BoxFit.cover,
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                notice.title,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 30),
+                              Text(notice.writer)
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                notice.content,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

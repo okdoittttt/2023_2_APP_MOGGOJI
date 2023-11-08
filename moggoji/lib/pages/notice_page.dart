@@ -12,7 +12,7 @@ class NoticePage extends StatefulWidget {
 
 class _NoticePageState extends State<NoticePage> {
   // TabBar Keyword
-  String documentName = 'a';
+  String documentName = '주요공지';
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _NoticePageState extends State<NoticePage> {
                             Tab(
                               text: '주요공지',
                               icon: Icon(
-                                Icons.food_bank,
+                                Icons.receipt_long,
                               ),
                             ),
                             Tab(
@@ -132,15 +132,15 @@ class _NoticePageState extends State<NoticePage> {
                           onTap: (index) {
                             if(index == 0) {
                               setState(() {
-                                documentName = 'a';
+                                documentName = '주요공지';
                               });
                             } else if(index == 1) {
                               setState(() {
-                                documentName = 'b';
+                                documentName = '인원모집';
                               });
                             } else {
                               setState(() {
-                                documentName = 'c';
+                                documentName = '정보공유';
                               });
                             }
                           },
