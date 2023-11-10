@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:moggoji/common/bottom_navi_bar.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:moggoji/service/globals.dart';
@@ -79,17 +80,7 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                               } else {
                                 Navigator.of(context).pop();
                                 showDialog(context: context, builder: (context){
-                                  return AlertDialog(
-                                    icon: Icon(Icons.warning_rounded, size: 50,color: Colors.red),
-                                    title: Text("미입력!!"),
-                                    content: Text("항목들을 모두 작성해주세요!"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: Text("돌아가기"))
-                                    ],
-                                  );
+                                  return ShowAlertDialogFillOut(title: "미입력!!", content: "항목들을 모두 작성해주세요!");
                                 });
                               }
                             },
