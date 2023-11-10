@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:moggoji/service/jwtTokenUnit.dart';
 
 import '../common/bottom_navi_bar.dart';
 import 'package:moggoji/models/user.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../service/globals.dart';
 
@@ -17,55 +19,58 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  List<User> user = [];
   Color myBackgroundColor = Color.fromRGBO(244, 247, 253, 1.0);
 
-  // 로그인 구현 전 테스트 용도로 사용할 이메일 값.
-  String email = "test@test.com";
+  String userId = '';
+  String userEmail = '';
 
   @override
   void initState() {
+    fetchData();
     super.initState();
-    // fetchOneUser(email);
   }
 
-  Future<List<User>> fetchOneUser(String email) async {
-    final response = await http.get(Uri.parse('$moreURL/$email'));
+  Future logout() async {
+    var res = await http.post(Uri.parse(logoutURL),
+      headers: headers,
+    );
+  }
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      print(response.body);
-      return data.map((json) => User.fromMap(json)).toList();
+  Future<void> fetchData() async {
+    JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
+    String? token = await jwtTokenUtil.loadToken();
+
+    print("========================== Token Test ==========================");
+    print(token);
+
+    // 2차 유효성 검사
+    if (token != null) {
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      // token이 null이 아닐 때만 디코딩 수행
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      String userId = decodedToken["id"];
+      String userEmail = decodedToken["email"];
+      print("User ID : $userId");
+      print("User Email : $userEmail");
+
+      setState(() {
+        this.userId = userId;
+        this.userEmail = userEmail;
+      });
+
+
     } else {
-      print('Failed to load user data. Status Code: ${response.statusCode}');
-      throw Exception(
-          'Failed to load user data. Status Code: ${response.statusCode}');
+      // token이 null인 경우에 대한 처리
+      print("Token is null. Unable to decode.");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String userEmail = '';
-    String userName = '';
-    String userPwd = '';
-    int userNumber = 0;
-
-    return FutureBuilder<List<User>>(
-      future: fetchOneUser(email),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text("Error ${snapshot.error}");
-        } else {
-          final users = snapshot.data;
-          if(users != null && users.isNotEmpty) {
-            final resultUser = users[0];
-            userEmail = resultUser.email;
-            userName = resultUser.id;
-            userPwd = resultUser.pwd;
-            userNumber = resultUser.number;
-          }
           return Scaffold(
             backgroundColor: myBackgroundColor,
             body: SafeArea(
@@ -120,7 +125,7 @@ class _MorePageState extends State<MorePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    userName,
+                                    userId,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
@@ -309,7 +314,4 @@ class _MorePageState extends State<MorePage> {
             bottomNavigationBar: BottomNaviBar(),
           );
         }
-      },
-    );
-  }
 }

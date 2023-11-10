@@ -2,7 +2,7 @@ package com.example.moggojiserver.controller;
 
 import com.example.moggojiserver.model.NoticeItem;
 import com.example.moggojiserver.repository.NoticeRepository;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
