@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:moggoji/common/bottom_navi_bar.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:moggoji/service/globals.dart';
@@ -72,9 +73,16 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                                 child: Text("취소")
                             ),
                             TextButton(onPressed: () {
-                              save();
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => NoticePage()));
+                              if(notice.title != '' && notice.content != '' && notice.date != '') {
+                                save();
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => NoticePage()));
+                              } else {
+                                Navigator.of(context).pop();
+                                showDialog(context: context, builder: (context){
+                                  return ShowAlertDialogFillOut(title: "미입력!!", content: "항목들을 모두 작성해주세요!");
+                                });
+                              }
                             },
                                 child: Text("등록")
                             )
@@ -176,11 +184,11 @@ class _RegistNoticePageState extends State<RegistNoticePage> {
                           Radio(value: '주요공지',
                               groupValue: selectedOption,
                               onChanged: (value) {
-                            setState(() {
-                              selectedOption = value!;
-                              notice.category = value;
-                              print(selectedOption);
-                            });
+                                setState(() {
+                                  selectedOption = value!;
+                                  notice.category = value;
+                                  print(selectedOption);
+                                });
                               }),
                           Text('주요공지'),
                           Radio(value: '인원모집',
