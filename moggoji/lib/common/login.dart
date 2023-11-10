@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:moggoji/models/user.dart';
+import 'package:moggoji/service/jwtTokenUnit.dart';
 import '../pages/main_screen.dart';
 import 'register_page.dart';
 import 'package:moggoji/service/globals.dart';
@@ -26,11 +27,50 @@ class _LoginState extends State<Login> {
   });
 
   Future login() async {
+    JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
+
     var res = await http.post(Uri.parse(loginURL),
       headers: headers,
-      body: json.encode({'email':user.email, 'pwd': user.pwd}));
+      body: json.encode({'id':user.id, 'pwd': user.pwd}));
 
-    print(res.body);
+    if(res.statusCode == 200) {
+      // 로그인 성공
+      // String token = json.decode(res.body);
+      String token = res.body;
+      // 토큰 저장
+      await jwtTokenUtil.saveToken(token);
+      print("============== TOKEN ==============");
+      print(token);
+
+      // 성공지 메인 페이지로 이동
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+
+      return token;
+    } else {
+      // 로그인 실패
+      showLoginFailedDialog();
+      throw Exception("로그인 실패");
+    }
+  }
+
+  void showLoginFailedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("로그인 실패"),
+          content: Text("아이디 또는 비밀번호가 잘못되었습니다."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("확인"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -174,15 +214,13 @@ class _LoginState extends State<Login> {
                                       child: ElevatedButton(
                                         onPressed: () {
                                           try {
-                                            login();
                                             print("로그인 메서드 진입");
+                                            login();
+
 
                                           } catch (e) {
                                             print(e);
                                           }
-
-
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                                         },
                                         child: Text("Sign In"),
                                       )),
