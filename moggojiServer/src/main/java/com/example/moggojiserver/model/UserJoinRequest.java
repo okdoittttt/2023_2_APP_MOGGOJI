@@ -11,5 +11,8 @@ public class UserJoinRequest {
     private String id;
     private String pwd;
     private String email;
+    private String name;
+    private String gender;
+    protected int age;
 
 }

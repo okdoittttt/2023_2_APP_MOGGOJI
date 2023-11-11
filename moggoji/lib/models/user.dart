@@ -3,12 +3,18 @@ class User {
   String id;
   String pwd;
   String email;
+  String name;
+  String gender;
+  int age;
 
   User({
     required this.number,
     required this.id,
     required this.pwd,
     required this.email,
+    required this.name,
+    required this.gender,
+    required this.age,
 });
 
   // factory User.fromJson(Map<String, dynamic> json) {
@@ -25,6 +31,9 @@ class User {
         id: userMap['id'] ?? '',        // id 값이 없을 경우 빈 문자열로 초기화
         pwd: userMap['pwd'] ?? '',      // pwd 값이 없을 경우 빈 문자열로 초기화
         email: userMap['email'] ?? '',  // email 값이 없을 경우 빈 문자열로 초기화
+        name: userMap['name'] ?? '',
+        gender: userMap['gender'] ?? '',
+        age: userMap['age'] ?? 0,
       );
     }
 

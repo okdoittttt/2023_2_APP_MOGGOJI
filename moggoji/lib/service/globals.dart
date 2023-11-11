@@ -5,6 +5,11 @@ const String registerURL = "$UserbaseURL/register";
 const String loginURL = "$UserbaseURL/login";
 const String logoutURL = "$UserbaseURL/logout";
 
+// 이미지 API URL
+const String imagebaseURL = "http://localhost:9191/image";
+const String imageAddURL = "$imagebaseURL/add";
+const String imageDisplayURL = "$imagebaseURL/display";
+
 // 일정 관리 API URL
 const String TaskbaseURL = "http://localhost:9191/schedule";
 const String getTask = "$TaskbaseURL/";

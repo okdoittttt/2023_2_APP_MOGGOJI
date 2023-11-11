@@ -23,6 +23,9 @@ class _MorePageState extends State<MorePage> {
 
   String userId = '';
   String userEmail = '';
+  String userName = '';
+  String userGender = '';
+  // String userAge = '';
 
   @override
   void initState() {
@@ -54,12 +57,18 @@ class _MorePageState extends State<MorePage> {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
       String userId = decodedToken["id"];
       String userEmail = decodedToken["email"];
+      String userName = decodedToken["name"];
+      String userGender = decodedToken["gender"];
+      // String userAge = decodedToken["age"];
       print("User ID : $userId");
       print("User Email : $userEmail");
 
       setState(() {
         this.userId = userId;
         this.userEmail = userEmail;
+        this.userName = userName;
+        this.userGender = userGender;
+        // this.userAge = userAge;
       });
 
 

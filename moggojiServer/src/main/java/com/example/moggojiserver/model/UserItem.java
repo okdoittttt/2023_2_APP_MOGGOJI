@@ -20,7 +20,11 @@ public class UserItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long number;
 
+    // 회원 정보
     private String id;
     private String pwd;
     private String email;
+    private String name;
+    private String gender;
+    protected int age;
 }
