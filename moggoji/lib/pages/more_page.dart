@@ -1,8 +1,10 @@
-import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:moggoji/service/imagePickerService.dart';
 import 'package:moggoji/service/jwtTokenUnit.dart';
 
 import '../common/bottom_navi_bar.dart';
@@ -23,7 +25,12 @@ class _MorePageState extends State<MorePage> {
 
   String userId = '';
   String userEmail = '';
+  String userName = '';
+  String userGender = '';
+  int userImgNumber = 0;
+  // int userAge = '';
 
+  Uint8List test = Uint8List.fromList([]);
   @override
   void initState() {
     fetchData();
@@ -54,19 +61,47 @@ class _MorePageState extends State<MorePage> {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
       String userId = decodedToken["id"];
       String userEmail = decodedToken["email"];
+      String userName = decodedToken["name"];
+      String userGender = decodedToken["gender"];
+      int userImgNumber = decodedToken["imageNumber"];
+      // String userAge = decodedToken["age"];
       print("User ID : $userId");
       print("User Email : $userEmail");
+      print("User Image Number : $userImgNumber");
 
       setState(() {
         this.userId = userId;
         this.userEmail = userEmail;
+        this.userName = userName;
+        this.userGender = userGender;
+        this.userImgNumber = userImgNumber;
+        // this.userAge = userAge;
       });
-
 
     } else {
       // token이 null인 경우에 대한 처리
       print("Token is null. Unable to decode.");
     }
+
+    // 이미지 불러오기
+    String imgURL = '$imageDisplayURL/${userImgNumber}';
+    print(imgURL);
+
+    final response = await http.get(Uri.parse(imgURL));
+
+    if (response.statusCode == 200) {
+      // 이미지 불러오기
+      Uint8List imageData = Uint8List.fromList(response.bodyBytes);
+      print(imageData.runtimeType);
+
+      setState(() {
+        this.test = imageData;
+      });
+    } else {
+      throw Exception('Failed to load Image');
+    }
+
+
   }
 
   @override
@@ -91,27 +126,33 @@ class _MorePageState extends State<MorePage> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
-                              width: 72,
-                              height: 72,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.purple,
-                                  width: 2,
+                            GestureDetector(
+                              onTap: () {
+                                ImagePickerService service = ImagePickerService();
+                                service.pickImage(userId);
+                              },
+                              child: Container(
+                                width: 72,
+                                height: 72,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.purple,
+                                    width: 2,
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(40),
-                                  child: Image.network(
-                                    'https://cdn.pixabay.com/photo/2017/01/10/03/54/avatar-1968236_1280.png',
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
+                                child: Padding(
+                                  padding:
+                                      EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: Image.memory(
+                                      test,
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),

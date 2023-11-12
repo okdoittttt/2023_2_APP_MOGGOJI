@@ -18,8 +18,8 @@ public class SecurityConfig {
                 .csrf().disable()   // csrf
                 .cors().and()   // cross site
                 .authorizeRequests()
-                .antMatchers("/users/**").permitAll()
-                .antMatchers("users/join", "users/login").permitAll()
+                .antMatchers("/users/**", "image/**").permitAll()
+                .antMatchers("users/join", "users/login", "image/add", "image/display").permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

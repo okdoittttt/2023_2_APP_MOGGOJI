@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -20,11 +21,15 @@ public class UserService {
     // encoded password save (아마 hash 값인듯?)
     private final BCryptPasswordEncoder encoder;
 
-    @Value("${jwt.secret-key}")
+    @Value("1q2w3e4r")
     private String key;
     private Long expireTimeMs = 1000 * 60 * 60l;
 
-    public String join(String id, String pwd, String email) {
+    // Image Path
+//    @Value("${}")
+//    private String uploadDir;
+
+    public String join(String id, String pwd, String email, String name, String gender, int age) {
 
         // userName 중복 체크
         userRepository.findById(id)
@@ -37,6 +42,9 @@ public class UserService {
                 .id(id)
                 .pwd(encoder.encode(pwd))
                 .email((email))
+                .name(name)
+                .gender(gender)
+                .age(age)
                 .build();
         userRepository.save(user);
 
@@ -54,8 +62,18 @@ public class UserService {
         }
 
         // Generate Token
-        String token = JwtTokenUtil.createToken(selectedUser.getId(), selectedUser.getEmail(), key,  expireTimeMs);
+        String token = JwtTokenUtil.createToken(selectedUser.getId(), selectedUser.getEmail(), selectedUser.getName(), selectedUser.getGender(), selectedUser.getAge(), selectedUser.getImageNumber(), key,  expireTimeMs);
 
         return token;
+    }
+
+    public String updateImgid(String userId, long imgId) {
+        UserItem user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOTFOUND, userId));
+
+        user.setImageNumber(imgId);
+        userRepository.save(user);
+
+        return "유저 이미지 업데이트 완료";
     }
 }

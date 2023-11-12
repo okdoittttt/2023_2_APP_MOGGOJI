@@ -169,7 +169,7 @@ class _LoginState extends State<Login> {
                                         },
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            return "Email is Empty!";
+                                            return "ID is Empty!";
                                           }
                                           return "";
                                         },
@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
                                         autofillHints: [AutofillHints.email],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Email',
+                                          labelText: 'ID',
                                         ),
                                         keyboardType: TextInputType.emailAddress,
                                       ),

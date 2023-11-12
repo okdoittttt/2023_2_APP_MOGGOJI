@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:moggoji/main.dart';
 import 'package:moggoji/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -21,19 +22,26 @@ class _RegisterPageState extends State<RegisterPage> {
     'id': '',
     'pwd': '',
     'email': '',
+    'name': '',
+    'gender': '',
+    'age': 0
   });
 
   Future save() async {
     var res = await http.post(Uri.parse(registerURL),
         headers: headers,
         body:
-            json.encode({'email': user.email, 'pwd': user.pwd, 'id': user.id}));
+            json.encode({'email': user.email, 'pwd': user.pwd, 'id': user.id, 'name': user.name, 'gender': user.gender, 'age': user.age}));
     print(res.body);
   }
+
 
   Future printError() async {
     print("로그인 중 에러 발생");
   }
+
+  // 성별 토글 컨트롤러
+  TextEditingController ageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +76,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Name is Empty!";
+                                return "ID is Empty!";
                               }
                               return "";
                             },
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Full Name',
-                              hintText: 'Enter your name here...',
+                              labelText: 'ID',
+                              hintText: 'Enter your ID here...',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.black,
@@ -273,7 +281,132 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                          // padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                          Padding(
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: TextFormField(
+                              controller:
+                              TextEditingController(text: user.name),
+                              onChanged: (val) {
+                                user.name = val;
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Name is Empty!";
+                                }
+                                return "";
+                              },
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Your Name',
+                                hintText: 'Enter your name here...',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: TextFormField(
+                              controller:
+                              TextEditingController(text: user.age.toString()),
+                              onChanged: (val) {
+                                user.age = int.tryParse(val) ?? 0;
+                              },
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Age is Empty!";
+                                }
+                                return "";
+                              },
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Your Age',
+                                hintText: 'Enter your Age here...',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          Padding(
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              child: Row(
+                                children: [
+                                  Radio(value: 'Male', groupValue: user.gender, onChanged: (val) {
+                                    setState(() {
+                                      user.gender = val!;
+                                    });
+                                  }),
+                                  Text("Male"),
+                                  Radio(value: 'Female', groupValue: user.gender, onChanged: (val) {
+                                    setState(() {
+                                      user.gender = val!;
+                                    });
+                                  }),
+                                  Text("Female"),
+                                ],
+                              )
+                          ),
                         ],
                       ),
                     ),

@@ -8,6 +8,7 @@ import com.example.moggojiserver.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> join(@Valid @RequestBody UserJoinRequest dto) {
 
-        userService.join(dto.getId(), dto.getPwd(), dto.getEmail());
+        userService.join(dto.getId(), dto.getPwd(), dto.getEmail(), dto.getName(), dto.getGender(), dto.getAge());
         return ResponseEntity.ok().body("회원가입 성공");
     }
 
