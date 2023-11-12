@@ -6,6 +6,7 @@ class User {
   String name;
   String gender;
   int age;
+  int imageNumber;
 
   User({
     required this.number,
@@ -15,6 +16,7 @@ class User {
     required this.name,
     required this.gender,
     required this.age,
+    required this.imageNumber,
 });
 
   // factory User.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,7 @@ class User {
         name: userMap['name'] ?? '',
         gender: userMap['gender'] ?? '',
         age: userMap['age'] ?? 0,
+        imageNumber: userMap['imageNumber'] ?? 0,
       );
     }
 

@@ -1,11 +1,16 @@
 package com.example.moggojiserver.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
 
 @Entity
 @Table(name = "image_table")
+@Getter
+@Setter
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,19 +18,20 @@ public class Image {
     @Lob
     private Blob image;
     private Date date = new Date();
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public Blob getImage() {
-        return image;
-    }
-    public void setImage(Blob image) {
-        this.image = image;
-    }
-    public Date getDate() {
-        return date;
-    }
+
+//    public long getId() {
+//        return id;
+//    }
+//    public void setId(long id) {
+//        this.id = id;
+//    }
+//    public Blob getImage() {
+//        return image;
+//    }
+//    public void setImage(Blob image) {
+//        this.image = image;
+//    }
+//    public Date getDate() {
+//        return date;
+//    }
 }

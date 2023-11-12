@@ -2,9 +2,11 @@ package com.example.moggojiserver.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class UserLoginRequest {
 
     private long number;
@@ -14,5 +16,7 @@ public class UserLoginRequest {
     private String name;
     private String gender;
     protected int age;
+
+    private int imageNumber;
 
 }

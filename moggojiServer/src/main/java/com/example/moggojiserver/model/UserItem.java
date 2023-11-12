@@ -4,16 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 @Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class UserItem {
 
     @Id
@@ -27,4 +26,6 @@ public class UserItem {
     private String name;
     private String gender;
     protected int age;
+
+    private long imageNumber;
 }

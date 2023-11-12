@@ -2,6 +2,7 @@ package com.example.moggojiserver.controller;
 
 import com.example.moggojiserver.model.Image;
 import com.example.moggojiserver.service.ImageService;
+import com.example.moggojiserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private UserService userService;
+
     // display image
     @GetMapping("/display/{id}")
     public ResponseEntity<byte[]> displayImage(@PathVariable long id) throws IOException, SQLException
@@ -35,14 +39,17 @@ public class ImageController {
 
     // add image - post
     @PostMapping("/add")
-    public String addImagePost(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException
+    public String addImagePost(HttpServletRequest request,@RequestParam("id") String id ,@RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException
     {
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 
         Image image = new Image();
         image.setImage(blob);
-        imageService.create(image);
+        long imgId = imageService.create(image);
+
+        userService.updateImgid(id, imgId);
+
         return "redirect:/";
     }
 }

@@ -35,37 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
     print(res.body);
   }
 
-  ImagePicker picker = ImagePicker();
-
-  Future<void> pickImage() async {
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    print(pickedFile);
-
-    if (pickedFile != null) {
-      // 멀티파트 요청을 생성합니다.
-      var request = http.MultipartRequest('POST', Uri.parse(imageAddURL));
-      request.headers.addAll(headers);
-
-      // 이미지 파일을 추가합니다.
-      var fileStream = http.ByteStream(Stream.castFrom(pickedFile.openRead()));
-      var length = await pickedFile.length();
-      var multipartFile = http.MultipartFile('image', fileStream, length,
-          filename: pickedFile.path);
-
-      request.files.add(multipartFile);
-
-      // 요청을 보냅니다.
-      var response = await http.Response.fromStream(await request.send());
-
-      // 서버 응답 확인
-      if (response.statusCode == 200) {
-        print('Uploaded!');
-      } else {
-        print('Failed to upload: ${response.statusCode}');
-      }
-    }
-  }
-
 
   Future printError() async {
     print("로그인 중 에러 발생");
@@ -435,7 +404,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     });
                                   }),
                                   Text("Female"),
-                                  ElevatedButton(onPressed: pickImage, child: Text("이미지 선택")),
                                 ],
                               )
                           ),

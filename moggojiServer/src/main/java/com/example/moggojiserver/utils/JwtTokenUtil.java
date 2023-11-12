@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class JwtTokenUtil {
     public static String createToken(String id, String email,
-                                     String name, String gender, int age,
+                                     String name, String gender, int age, long imageNumber,
                                      String key, long expireTimeMs) {
         Claims claims = Jwts.claims(); // map
         claims.put("id", id);
@@ -16,6 +16,7 @@ public class JwtTokenUtil {
         claims.put("name", name);
         claims.put("gender", gender);
         claims.put("age", age);
+        claims.put("imageNumber", imageNumber);
 
         return Jwts.builder()
                 .setClaims(claims)

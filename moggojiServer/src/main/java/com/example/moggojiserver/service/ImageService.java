@@ -13,8 +13,9 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public Image create(Image image){
-        return imageRepository.save(image);
+    public long create(Image image){
+        Image savedImg = imageRepository.save(image);
+        return savedImg.getId();
     }
 
     public List<Image> viewAll() {

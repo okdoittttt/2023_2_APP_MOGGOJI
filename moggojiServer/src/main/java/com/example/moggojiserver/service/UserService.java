@@ -62,8 +62,18 @@ public class UserService {
         }
 
         // Generate Token
-        String token = JwtTokenUtil.createToken(selectedUser.getId(), selectedUser.getEmail(), selectedUser.getName(), selectedUser.getGender(), selectedUser.getAge(), key,  expireTimeMs);
+        String token = JwtTokenUtil.createToken(selectedUser.getId(), selectedUser.getEmail(), selectedUser.getName(), selectedUser.getGender(), selectedUser.getAge(), selectedUser.getImageNumber(), key,  expireTimeMs);
 
         return token;
+    }
+
+    public String updateImgid(String userId, long imgId) {
+        UserItem user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOTFOUND, userId));
+
+        user.setImageNumber(imgId);
+        userRepository.save(user);
+
+        return "유저 이미지 업데이트 완료";
     }
 }
