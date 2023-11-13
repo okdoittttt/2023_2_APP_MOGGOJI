@@ -4,6 +4,8 @@ import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 import 'package:moggoji/pages/detail/submit_survey_form_page.dart';
 import 'package:moggoji/pages/survey_page.dart';
 
+enum Type { bar, objective, shortAnswer }
+
 class AddForm {
   final String question;
 
@@ -20,6 +22,8 @@ class RegistSurveyFormPage extends StatefulWidget {
 class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
   String question = '';
   String title = '';
+
+  Type _selectedType = Type.objective;
 
   List<AddForm> addForm = [];
 
@@ -43,6 +47,7 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                     showDialog(context: context,
                         builder: (_){
                       return AlertDialog(
+                        title: Text("설문 등록"),
                         content: Text("작성하신 설문 항목들을 등록하시겠습니까?"),
                         actions: <Widget>[
                           TextButton(onPressed: ()=>Navigator.pop(context, 'Cancel'),
@@ -57,7 +62,8 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                 });
                                 } else {
                                   Navigator.push(context,
-                                      MaterialPageRoute(builder: (context)=>SurveyPage()));
+                                      // MaterialPageRoute(builder: (context)=>SurveyPage()));
+                                      MaterialPageRoute(builder: (context)=>SubmitSurveyForm()));
                               }
                           },
                               child: Text("등록")
@@ -89,45 +95,51 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                         question = '';
                         showDialog(context: context, builder: (context){
                           return AlertDialog(
-                            title: Text("질문 추가"),
-                            actions: <Widget>[
-                              TextField(
-                                onChanged: (value) {
-                                  setState(() {
-                                    question = value;
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  hintText: "ex) 학번을 입력하세요"
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: ()=>Navigator.pop(context, 'Cancel'),
-                                      child: Text("취소")
+                                title: Text("질문 추가"),
+                                actions: <Widget>[
+                                  TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        question = value;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: "ex) 만족도는 어떠신가요?"
+                                    ),
                                   ),
-                                  TextButton(
-                                    child: Text("추가"),
-                                    onPressed: (){
-                                      if(question == '') {
-                                        showDialog(context: context, builder: (context){
-                                          return ShowAlertDialogFillOut(title:"미입력!!", content: "질문을 입력해주세요!",);
-                                        });
-                                      } else {
-                                        setState(() {
-                                          addForm.add(AddForm(question: question));
-                                        });
-                                        Navigator.pop(context);
-                                      }
-                                  }
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: Text("취소")
+                                      ),
+                                      TextButton(
+                                          child: Text("추가"),
+                                          onPressed: () {
+                                            if (question == '') {
+                                              showDialog(context: context,
+                                                  builder: (context) {
+                                                    return ShowAlertDialogFillOut(
+                                                      title: "미입력!!",
+                                                      content: "질문을 입력해주세요!",);
+                                                  });
+                                            } else {
+                                              setState(() {
+                                                addForm.add(AddForm(
+                                                    question: question));
+                                              });
+                                              Navigator.pop(context);
+                                            }
+                                          }
+                                      )
+                                    ],
                                   )
                                 ],
-                              )
-                            ],
-                          );
-                        });
+                              );
+                            }
+                        );
                       },
                   ),
                 ),

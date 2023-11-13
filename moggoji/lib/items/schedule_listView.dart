@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 
 import '../models/schedule.dart';
 import '../service/globals.dart';
@@ -16,6 +17,7 @@ class ListViewPage extends StatefulWidget {
 
 class _ListViewPageState extends State<ListViewPage> {
   List<Schedule> schedules = [];
+  int enrollNum = 0;
 
   @override
   void initState() {
@@ -167,82 +169,174 @@ class _ListViewPageState extends State<ListViewPage> {
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(5, 0, 5, 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 30,
-                      child: ListTile(
-                        visualDensity: VisualDensity(
-                            horizontal: 0, vertical: -4),
-                        leading: Text("날짜",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
+                      width: 248,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              leading: Text("날짜",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              // title: Text(schedule.date),
+                              title: Text('${DateFormat("yy-MM-dd").format(DateTime.parse(schedule.date))}($weekDayText) ${DateFormat("HH:mm").format(DateTime.parse(schedule.date))}',),
+                            ),
                           ),
-                        ),
-                        // title: Text(schedule.date),
-                        title: Text('${DateFormat("yy-MM-dd").format(DateTime.parse(schedule.date))}($weekDayText) ${DateFormat("HH:mm").format(DateTime.parse(schedule.date))}',),
+                          SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              leading: Text("장소",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              title: Text(schedule.location),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              leading: Text("내용",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              title: Text(schedule.content),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              leading: Text("금액",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              title: Text(schedule.fee.toString()),
+                            ),
+                          ),
+                          /* 추후 DB에서 인원 수 가져올 예정 */
+                          SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: 0, vertical: -4),
+                              leading: Text("참여",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              title: Text(
+                                  "${schedule.date.substring(11,13)} 명"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                      child: ListTile(
-                        visualDensity: VisualDensity(
-                            horizontal: 0, vertical: -4),
-                        leading: Text("장소",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        title: Text(schedule.location),
+                    ElevatedButton(
+                      onPressed: differenceDate.inSeconds >= 0
+                          ? (){}//null
+                          : () {
+                        showDialog(
+                            context: context,
+                            builder: (context){
+                              return GestureDetector(
+                                onTap: (){
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: Dialog(
+                                  child: Container(
+                                    height: 180,
+                                    margin: EdgeInsetsDirectional.symmetric(vertical: 10.0, horizontal: 30.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        TextFormField(
+                                          keyboardType: TextInputType.number,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              enrollNum = int.parse(value);
+                                              print(enrollNum);
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            label: Text("출석"),
+                                            hintText: "인증번호",
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.circular(15)
+                                            )
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                          child: ElevatedButton(
+                                              onPressed: (){
+                                                if(enrollNum == 0 || enrollNum / 100 < 1 || enrollNum / 100 >= 10) {
+                                                  showDialog(context: context, builder: (context){
+                                                    return ShowAlertDialogFillOut(
+                                                        title:"인증번호 오류!!",
+                                                        content: "100 ~ 999 사이의 인증번호를 입력해주세요!"
+                                                    );
+                                                  });
+                                                } else {
+                                                  Navigator.pop(context);
+                                                  showDialog(context: context, builder: (context){
+                                                    return AlertDialog(
+                                                      title: Text("출석 완료"),
+                                                      content: Text("출석을 완료했습니다!"),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                            onPressed: (){
+                                                              Navigator.pop(context);
+                                                              },
+                                                            child: Text("완료")
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                                }
+                                              },
+                                              child: Text("출석")
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      style: ButtonStyle(
+                          shape: MaterialStatePropertyAll<
+                              RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              )
+                          )
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: ListTile(
-                        visualDensity: VisualDensity(
-                            horizontal: 0, vertical: -4),
-                        leading: Text("내용",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        title: Text(schedule.content),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: ListTile(
-                        visualDensity: VisualDensity(
-                            horizontal: 0, vertical: -4),
-                        leading: Text("금액",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        title: Text(schedule.fee.toString()),
-                      ),
-                    ),
-                    /* 추후 DB에서 인원 수 가져올 예정 */
-                    SizedBox(
-                      height: 30,
-                      child: ListTile(
-                        visualDensity: VisualDensity(
-                            horizontal: 0, vertical: -4),
-                        leading: Text("참여",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        title: Text(
-                            "${schedule.date.substring(11,13)} 명"),
-                      ),
+                      child: Text("출석"),
                     ),
                   ],
                 ),
