@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
-import 'package:moggoji/pages/main_screen.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/pages/survey_page.dart';
 
-class SurveyOx extends StatefulWidget {
-  const SurveyOx({super.key});
+class SubmitSurveyOx extends StatefulWidget {
+  const SubmitSurveyOx({super.key});
 
   @override
-  State<SurveyOx> createState() => _SurveyOxState();
+  State<SubmitSurveyOx> createState() => _SubmitSurveyOxState();
 }
 
-class _SurveyOxState extends State<SurveyOx> {
+class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
   var setOBgColor = Colors.white70;
   var setXBgColor = Colors.white70;
   var isOBtnOn = false;
@@ -30,6 +31,7 @@ class _SurveyOxState extends State<SurveyOx> {
               onPressed: ()=>(
                   showDialog(context: context, builder: (context){
                     return AlertDialog(
+                      title: Text("OX 설문 제출"),
                       content: Text("선택하신 결과를 제출하시겠습니까?"),
                       actions: <Widget>[
                         TextButton(onPressed: ()=>Navigator.pop(context, 'Cancel'),
@@ -39,20 +41,13 @@ class _SurveyOxState extends State<SurveyOx> {
                           if(isOBtnOn == false && isXBtnOn == false) {
                             Navigator.of(context).pop();
                             showDialog(context: context, builder: (context){
-                                  return AlertDialog(
-                                    icon: Icon(Icons.warning_rounded, size: 50,color: Colors.red),
-                                    title: Text("결과 미입력!!"),
-                                    content: Text("결과를 선택해주세요!"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: Text("돌아가기"))
-                                    ],
+                                  return ShowAlertDialogFillOut(
+                                      title: "미선택!!",
+                                      content: "O, X 둘 중 하나를 선택해주세요!"
                                   );
                                 });
                               } else {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));
                           }
                         },
                             child: Text("제출")

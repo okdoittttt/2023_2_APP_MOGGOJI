@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/pages/survey_page.dart';
 
-class SurveyForm extends StatefulWidget {
-  const SurveyForm({super.key});
+enum Title { fillOut, chart }
 
-  @override
-  State<SurveyForm> createState() => _SurveyFormState();
+class AddForm {
+  final String question;
+
+  AddForm({required this.question});
 }
 
-class _SurveyFormState extends State<SurveyForm> {
+class SubmitSurveyForm extends StatefulWidget {
+  const SubmitSurveyForm({super.key});
+
+  @override
+  State<SubmitSurveyForm> createState() => _SubmitSurveyFormState();
+}
+
+class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
+  Title _selectedTitle = Title.fillOut;
+
+  String question = '';
+
+  List<AddForm> addForm = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,30 +40,24 @@ class _SurveyFormState extends State<SurveyForm> {
               onPressed: ()=>(
                   showDialog(context: context, builder: (context){
                     return AlertDialog(
+                      title: Text("설문 제출"),
                       content: Text("선택하신 결과를 제출하시겠습니까?"),
                       actions: <Widget>[
                         TextButton(onPressed: ()=>Navigator.pop(context, 'Cancel'),
                             child: Text("취소")
                         ),
                         TextButton(onPressed: (){
-                          // if(isOBtnOn == false && isXBtnOn == false) {
-                          //   Navigator.of(context).pop();
-                          //   showDialog(context: context, builder: (context){
-                          //     return AlertDialog(
-                          //       icon: Icon(Icons.warning_rounded, size: 50,color: Colors.red),
-                          //       title: Text("결과 미입력!!"),
-                          //       content: Text("결과를 선택해주세요!"),
-                          //       actions: [
-                          //         TextButton(
-                          //             onPressed: () =>
-                          //                 Navigator.pop(context, 'Cancel'),
-                          //             child: Text("돌아가기"))
-                          //       ],
-                          //     );
-                          //   });
-                          // } else {
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
-                          // }
+                          if(_selectedTitle.name == "chart") {
+                            Navigator.of(context).pop();
+                            showDialog(context: context, builder: (context){
+                              return ShowAlertDialogFillOut(
+                                  title: "미입력!!",
+                                  content: "모든 항목을 입력해주세요!!"
+                              );
+                            });
+                          } else {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));
+                          }
                         },
                             child: Text("제출")
                         )
@@ -69,6 +79,39 @@ class _SurveyFormState extends State<SurveyForm> {
                   style: TextStyle(fontSize: 20.0),) //db에서 가져오기
             ),
           ),
+          Container(
+          width: double.infinity,
+            margin: EdgeInsetsDirectional.symmetric(horizontal: 5.0),
+            child: SegmentedButton<Title>(
+                selected: <Title>{_selectedTitle},
+                onSelectionChanged: (Set<Title> newSelection){
+                  setState(() {
+                    _selectedTitle = newSelection.first;
+                    print(_selectedTitle.name);
+                  });
+                },
+                segments: const <ButtonSegment<Title>>[
+                  ButtonSegment<Title>(
+                      value: Title.fillOut,
+                      label: Text("설문 작성")
+                  ),
+                  ButtonSegment<Title>(
+                      value: Title.chart,
+                      label: Text("통계")
+                  )
+                ],
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),)
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index){
+                  return Text(_selectedTitle.name.toString());
+                }),
+          )
         ],
       ),
       bottomNavigationBar: BottomNaviBar(),
