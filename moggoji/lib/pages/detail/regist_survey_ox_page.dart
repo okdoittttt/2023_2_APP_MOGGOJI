@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+
 import 'package:moggoji/pages/detail/submit_survey_ox_page.dart';
+import '../../models/survey.dart';
+import '../../service/globals.dart';
 
 class RegistSurveyOxPage extends StatefulWidget {
   const RegistSurveyOxPage({super.key});
@@ -11,7 +17,56 @@ class RegistSurveyOxPage extends StatefulWidget {
 }
 
 class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
-  String title = '';
+  final _registNoteKey = GlobalKey<FormState>();
+
+  Survey survey = Survey(
+      survey_number: 0,
+      survey_title: '',
+      survey_type: 0,
+      survey_creator: 'sonny',
+      content1: '',
+      content2: '',
+      content3: '',
+      content4: '',
+      content5: '',
+      content6: '',
+      content7: '',
+      content8: '',
+      content9: '',
+      content10: '',
+      content11: '',
+      content12: '',
+      content13: '',
+      content14: '',
+      content15: '');
+
+  Future save() async {
+    var res = await http.post(Uri.parse(addSurvey),
+        headers: headers,
+        body: json.encode({
+          'survey_number': survey.survey_number,
+          'survey_title': survey.survey_title,
+          'survey_type': survey.survey_type,
+          'survey_creator': survey.survey_creator,
+          'content1': survey.content1,
+          'content2': survey.content2,
+          'content3': survey.content3,
+          'content4': survey.content4,
+          'content5': survey.content5,
+          'content6': survey.content6,
+          'content7': survey.content7,
+          'content8': survey.content8,
+          'content9': survey.content9,
+          'content10': survey.content10,
+          'content11': survey.content11,
+          'content12': survey.content12,
+          'content13': survey.content13,
+          'content14': survey.content14,
+          'content15': survey.content15,
+        }));
+
+    print(res.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +96,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                           ),
                           TextButton(
                               onPressed: (){
-                                if(title == '') {
+                                if(survey.survey_title == '') {
                                   Navigator.pop(context);
                                   showDialog(context: context, builder: (context){
                                     return ShowAlertDialogFillOut(
@@ -50,8 +105,9 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                                     );
                                   });
                                 } else {
+                                  save();
                                   Navigator.push(context,
-                                      // MaterialPageRoute(builder: (context)=>SurveyPage()));
+                                      // MaterialPageRoute(builder: (context)=>SurveyPage()))
                                       MaterialPageRoute(builder: (context)=>SubmitSurveyOx()));
                                 }
                           },
@@ -69,11 +125,13 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
         body: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Form(
+            key: _registNoteKey,
             child: TextFormField(
-              controller: TextEditingController(text: title),
+              controller: TextEditingController(text: survey.survey_title),
               onChanged: (value) {
                 setState(() {
-                  title = value;
+                  survey.survey_title = value;
+                  survey.survey_type = 2;
                 });
               },
               decoration: InputDecoration(
