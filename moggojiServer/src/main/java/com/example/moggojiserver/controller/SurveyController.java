@@ -22,17 +22,17 @@ public class SurveyController {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    @GetMapping(value = "getAllSurvey")
+    @GetMapping(value = "/getAllSurvey")
     public List<SurveyItem> getAllSurvey() {
         return surveyRepository.findAll();
     }
 
-    @PostMapping("addSurvey")
+    @PostMapping("/addSurvey")
     public SurveyItem addSurvey(@Valid @RequestBody SurveyItem dto) {
         return surveyRepository.save(dto);
     }
 
-    @GetMapping(value = "getSurveyByNumber/{survey_number}")
+    @GetMapping(value = "/getSurveyByNumber/{survey_number}")
     public List<SurveyItem> findSurveyByNumber(@PathVariable int survey_number) {
         List<SurveyItem> surveyItems = surveyRepository.findById(survey_number);
 
