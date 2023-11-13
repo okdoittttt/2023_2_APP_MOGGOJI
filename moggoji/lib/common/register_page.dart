@@ -23,18 +23,23 @@ class _RegisterPageState extends State<RegisterPage> {
     'pwd': '',
     'email': '',
     'name': '',
-    'gender': '',
+    'gender': 'Male',
     'age': 0
   });
 
   Future save() async {
     var res = await http.post(Uri.parse(registerURL),
         headers: headers,
-        body:
-            json.encode({'email': user.email, 'pwd': user.pwd, 'id': user.id, 'name': user.name, 'gender': user.gender, 'age': user.age}));
+        body: json.encode({
+          'email': user.email,
+          'pwd': user.pwd,
+          'id': user.id,
+          'name': user.name,
+          'gender': user.gender,
+          'age': user.age
+        }));
     print(res.body);
   }
-
 
   Future printError() async {
     print("로그인 중 에러 발생");
@@ -175,6 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
                               controller: TextEditingController(text: user.pwd),
+                              obscureText: true,
                               onChanged: (val) {
                                 user.pwd = val;
                               },
@@ -234,8 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
-                              // controller:
-                              // obscureText:,
+                              obscureText: true,
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',
                                 hintText: 'Confirm password here...',
@@ -283,10 +288,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           Padding(
                             padding:
-                            EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
                               controller:
-                              TextEditingController(text: user.name),
+                                  TextEditingController(text: user.name),
                               onChanged: (val) {
                                 user.name = val;
                               },
@@ -336,10 +341,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           Padding(
                             padding:
-                            EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
-                              controller:
-                              TextEditingController(text: user.age.toString()),
+                              controller: TextEditingController(
+                                  text: user.age.toString()),
                               onChanged: (val) {
                                 user.age = int.tryParse(val) ?? 0;
                               },
@@ -389,24 +394,34 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           Padding(
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Radio(value: 'Male', groupValue: user.gender, onChanged: (val) {
-                                    setState(() {
-                                      user.gender = val!;
-                                    });
-                                  }),
+                                  Radio(
+                                    value: 'Male',
+                                    groupValue: user.gender,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        user.gender = val!;
+                                      });
+                                    },
+                                    activeColor: Colors.black,
+                                  ),
                                   Text("Male"),
-                                  Radio(value: 'Female', groupValue: user.gender, onChanged: (val) {
-                                    setState(() {
-                                      user.gender = val!;
-                                    });
-                                  }),
+                                  Radio(
+                                    value: 'Female',
+                                    groupValue: user.gender,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        user.gender = val!;
+                                      });
+                                    },
+                                    activeColor: Colors.black,
+                                  ),
                                   Text("Female"),
                                 ],
-                              )
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -419,6 +434,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                shadowColor: Colors.yellow,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
                               onPressed: () {
                                 try {
                                   save();
@@ -434,8 +457,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                             // 다이얼로그 닫기
                                             Navigator.of(context).pop();
                                             // 로그인 화면으로 이동
-                                            Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(builder: (context) => MyApp(),),
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) => MyApp(),
+                                              ),
                                             );
                                           },
                                           child: Text('확인'),
@@ -463,10 +489,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                                 }
                               },
-                              child: Icon(
-                                Icons.arrow_forward,
-                                size: 30,
-                              ),
+                              child: Row(children: [
+                                Text(
+                                  "회원가입",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  size: 20,
+                                ),
+                              ]),
                             ),
                           ],
                         ),

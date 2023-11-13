@@ -8,6 +8,7 @@ import 'package:moggoji/items/show_dialog_regist_survey.dart';
 import 'package:moggoji/pages/detail/regist_event_page.dart';
 import 'package:moggoji/pages/detail/regist_notice_page.dart';
 import 'package:moggoji/pages/event_page.dart';
+import 'package:moggoji/pages/more_page.dart';
 import 'package:moggoji/pages/notice_page.dart';
 import 'package:moggoji/pages/survey_page.dart';
 
@@ -47,93 +48,196 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        /* title -> 관리자가 정하는 모꼬지 이름을 DB에서 가져와서 보여줄 예정 */
-        title: Text("MOGGOJI"),
-        // 뒤로가기 버튼 없애기 -> 로그인 구현 후 적용할 예정
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Stack(children: [
+              Image.asset(
+                'assets/main.jpg',
+                width: MediaQuery.sizeOf(context).width,
+                height: 250,
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+                bottom: 16,
+                left: 16,
+                child: Text(
+                  '소모임 관리 어플',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 40,
+                left: 16,
+                child: Text(
+                  'MOGGOJI',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ]),
+            SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  /* 행사등록 버튼 -> 관리자 권한이 있는 사람한테만 사용가능 또는 사라지게 할 예정 */
-                  ElevatedButton(
-                      onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => RegistEventPage()));},
-                      style: ButtonStyle(
-                          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                          )
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NoticePage()));
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.notifications,
+                          color: Colors.greenAccent,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("공지사항"),
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Column(children: [
+                        Icon(
+                          Icons.people_alt,
+                          color: Colors.yellow,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("참여인원")
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SurveyPage()));
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.pending_actions,
+                          color: Colors.redAccent,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("설문조사")
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(children: [
+                      Icon(
+                        Icons.link,
+                        color: Colors.lightBlue,
+                        size: 40,
                       ),
-                      child: Text("행사 등록", style: TextStyle(letterSpacing: 1),)),
-                  ElevatedButton(
-                      onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => RegistNoticePage()));},
-                      style: ButtonStyle(
-                          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                          )
-                      ),
-                      child: Text("공지 등록", style: TextStyle(letterSpacing: 1),)),
-                  ElevatedButton(
-                      onPressed: (){
-                        setState(() { showDialog(context: context, builder: (context){
-                        return ShowDialogRegistSurvey();
-                      });
-                      });
-                        },
-                      style: ButtonStyle(
-                          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                          )
-                      ),
-                      child: Text("설문 등록", style: TextStyle(letterSpacing: 1),)),
+                      SizedBox(height: 10),
+                      Text("링크")
+                    ]),
+                  ),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-              child: Column(
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text("공지사항",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 2
-                            ),
-                          ),
-                          trailing: TextButton(
-                            onPressed:(){Navigator.push(context, MaterialPageRoute(builder: (context) => NoticePage()));} ,
-                            child: Text("더보기",
-                              style: TextStyle(
-                                  color: Colors.grey
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegistNoticePage()));
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.edit_notifications_sharp,
+                          color: Colors.deepPurpleAccent,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("공지등록"),
+                      ]),
                     ),
                   ),
-                  Container(
-                    height: 40,
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: ListTile(
-                      title: Text("개강총회 안내"),
-                      trailing: Text("2023.09.08."),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegistEventPage()));
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.receipt_long,
+                          color: Colors.teal,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("행사등록")
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ShowDialogRegistSurvey();
+                              });
+                        });
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.pending_actions_sharp,
+                          color: Colors.orange,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("설문등록")
+                      ]),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MorePage()));
+                      },
+                      child: Column(children: [
+                        Icon(
+                          Icons.account_circle,
+                          color: Colors.deepOrangeAccent,
+                          size: 40,
+                        ),
+                        SizedBox(height: 10),
+                        Text("더보기")
+                      ]),
                     ),
                   ),
                 ],
@@ -145,123 +249,15 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.calendar_month_outlined),
-                    title: Text("행사일정",
+                    title: Text(
+                      "행사일정",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          letterSpacing: 2
-                      ),
+                          letterSpacing: 2),
                     ),
                   ),
                   MainScreenSchedule(),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.people_alt),
-                          title: Row(
-                            children: [
-                              Text("모꼬지 참여자",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 2
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5),
-                                child: Text("(76명)",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),),
-                              )
-                            ],
-                          ),
-                          trailing: TextButton(
-                            onPressed:(){} ,
-                            child: Text("더보기",
-                              style: TextStyle(
-                                  color: Colors.grey
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                      height: 40,
-                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("프로필1"),
-                          Text("프로필2"),
-                          Text("프로필3"),
-                          Text("프로필4"),
-                          Text("프로필5"),
-                        ],
-                      )
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 20, 15, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.pending_actions),
-                          title: Text("등록된 설문",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 2
-                            ),
-                          ),
-                          trailing: TextButton(
-                              onPressed:(){Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));} ,
-                              child: Text("더보기",
-                                style: TextStyle(
-                                    color: Colors.grey
-                                ),
-                              )
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: ListTile(
-                      title: Text("깃 세미나 만족도"),
-                      trailing: Text("2023.09.11."),
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: ListTile(
-                      title: Text("노션 세미나 만족도"),
-                      trailing: Text("2023.09.12."),
-                    ),
-                  ),
                 ],
               ),
             ),
