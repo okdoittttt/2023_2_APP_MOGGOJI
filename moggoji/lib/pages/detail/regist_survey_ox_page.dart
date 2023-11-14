@@ -105,6 +105,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                                     );
                                   });
                                 } else {
+                                  survey.survey_type = 1;
                                   save();
                                   Navigator.push(context,
                                       // MaterialPageRoute(builder: (context)=>SurveyPage()))
@@ -127,11 +128,9 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
           child: Form(
             key: _registNoteKey,
             child: TextFormField(
-              controller: TextEditingController(text: survey.survey_title),
               onChanged: (value) {
                 setState(() {
                   survey.survey_title = value;
-                  survey.survey_type = 2;
                 });
               },
               decoration: InputDecoration(
