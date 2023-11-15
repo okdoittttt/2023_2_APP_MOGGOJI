@@ -183,7 +183,7 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                     return ShowAlertDialogFillOut(title:"미입력!!", content: "제목 또는 질문을 입력해주세요!");
                                 });
                                 } else {
-                                  survey.survey_type = 1;
+                                  survey.survey_type = 2;
                                   save();
                                   Navigator.push(context,
                                       // MaterialPageRoute(builder: (context)=>SurveyPage()));
@@ -295,82 +295,85 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                             ),
                           ),
                         ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (_,index) {
-                            return InkWell(
-                              child: ListTile(
-                                title: Text(addForm[index].question),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton.outlined(
-                                      onPressed: (){
-                                        showDialog(context: context, builder: (context){
-                                          return AlertDialog(
-                                            title: Text("질문 수정"),
-                                            actions: <Widget>[
-                                              TextFormField(
-                                                initialValue: addForm[index].question,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    question = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                    hintText: "ex) 학번을 입력하세요"
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  TextButton(
-                                                      onPressed: ()=>Navigator.pop(context, 'Cancel'),
-                                                      child: Text("취소")
-                                                  ),
-                                                  TextButton(
-                                                      child: Text("수정"),
-                                                      onPressed: (){
-                                                        if(question == '') {
-                                                          showDialog(context: context, builder: (context){
-                                                            return ShowAlertDialogFillOut(title:"미입력!!", content: "질문을 입력해주세요!",);
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            addForm[index] = AddForm(question: question);
-                                                            SwitchCase(survey, index, addForm);
-                                                          });
-                                                          Navigator.pop(context);
-                                                        }
-                                                      }
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          );
-                                        });
-                                      },
-                                      icon: Icon(Icons.edit),
-                                      style: ButtonStyle(
-                                          shape: MaterialStatePropertyAll(OutlinedBorder.lerp(LinearBorder.none, LinearBorder.none, 0))),
-                                    ),
-                                    IconButton.outlined(
+                        SingleChildScrollView(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemBuilder: (_,index) {
+                              return InkWell(
+                                child: ListTile(
+                                  title: Text(addForm[index].question),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton.outlined(
                                         onPressed: (){
-                                          setState(() {
-                                            addForm.removeAt(index);
-                                            RemoveSwitchCase(survey, index);
+                                          showDialog(context: context, builder: (context){
+                                            return AlertDialog(
+                                              title: Text("질문 수정"),
+                                              actions: <Widget>[
+                                                TextFormField(
+                                                  initialValue: addForm[index].question,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      question = value;
+                                                    });
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      hintText: "ex) 학번을 입력하세요"
+                                                  ),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    TextButton(
+                                                        onPressed: ()=>Navigator.pop(context, 'Cancel'),
+                                                        child: Text("취소")
+                                                    ),
+                                                    TextButton(
+                                                        child: Text("수정"),
+                                                        onPressed: (){
+                                                          if(question == '') {
+                                                            showDialog(context: context, builder: (context){
+                                                              return ShowAlertDialogFillOut(title:"미입력!!", content: "질문을 입력해주세요!",);
+                                                            });
+                                                          } else {
+                                                            setState(() {
+                                                              addForm[index] = AddForm(question: question);
+                                                              SwitchCase(survey, index, addForm);
+                                                            });
+                                                            Navigator.pop(context);
+                                                          }
+                                                        }
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            );
                                           });
                                         },
-                                        icon: Icon(Icons.delete_forever_rounded),
+                                        icon: Icon(Icons.edit),
                                         style: ButtonStyle(
                                             shape: MaterialStatePropertyAll(OutlinedBorder.lerp(LinearBorder.none, LinearBorder.none, 0))),
-                                    ),
-                                  ],
+                                      ),
+                                      IconButton.outlined(
+                                          onPressed: (){
+                                            setState(() {
+                                              addForm.removeAt(index);
+                                              RemoveSwitchCase(survey, index);
+                                            });
+                                          },
+                                          icon: Icon(Icons.delete_forever_rounded),
+                                          style: ButtonStyle(
+                                              shape: MaterialStatePropertyAll(OutlinedBorder.lerp(LinearBorder.none, LinearBorder.none, 0))),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: addForm.length,
+                              );
+                            },
+                            itemCount: addForm.length,
+                          ),
                         )
                       ],
                     )
