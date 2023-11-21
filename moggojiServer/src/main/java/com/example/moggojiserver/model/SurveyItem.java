@@ -17,11 +17,11 @@ public class SurveyItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long survey_number;
+    private long surveyNumber;
 
-    private int survey_type;        // 동의 또는 비동의 설문 조사 = 1, OX 설문 조사 = 2
-    private String survey_title;    // 설문 제목
-    private String survey_creator;  // 설문 작성자
+    private int surveyType;        // OX 설문 조사 = 1, 만족도 설문 조사 = 2
+    private String surveyTitle;    // 설문 제목
+    private String surveyCreator;  // 설문 작성자
 
     // 최대 개수는 15개로 설정
     private String content1;
