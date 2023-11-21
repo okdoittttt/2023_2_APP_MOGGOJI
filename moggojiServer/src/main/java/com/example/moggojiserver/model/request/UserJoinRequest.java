@@ -1,4 +1,4 @@
-package com.example.moggojiserver.model;
+package com.example.moggojiserver.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserLoginRequest {
+public class UserJoinRequest {
 
     private long number;
     private String id;

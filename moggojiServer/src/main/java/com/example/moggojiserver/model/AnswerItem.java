@@ -25,7 +25,7 @@ public class AnswerItem {
     private String respondent;
     private String survey_title;
 
-    
+
     private int answer1;
     private int answer2;
     private int answer3;
