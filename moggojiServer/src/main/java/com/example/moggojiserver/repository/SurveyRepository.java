@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SurveyRepository extends JpaRepository<SurveyItem, Long> {
-    List<SurveyItem> findById(long survey_number);
+    List<SurveyItem> findBySurveyType(int surveyType);
+    long countBySurveyType(int surveyType);
 }

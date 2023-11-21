@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_dialog_regist_survey.dart';
+import 'package:moggoji/items/survey_listView.dart';
+import 'package:moggoji/items/survey_type_listView.dart';
+import 'package:http/http.dart' as http;
+import '../models/survey.dart';
+import '../service/globals.dart';
 
 class SurveyPage extends StatefulWidget {
   const SurveyPage({super.key});
@@ -11,11 +18,51 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage> {
   // TabBar Keyword
-  String documentName = 'a';
+  int surveyType = 0;
+  int countOfType = 0;
+  int allTypeCount = 0;
 
   @override
   void initState() {
     super.initState();
+    fetchSurveyAllCount();
+  }
+
+  Future<void> fetchSurveyCount(int surveyType) async {
+    String getCountSurvey = '$SurveybaseURL/getCountByType/$surveyType';
+
+    final response = await http.get(Uri.parse(getCountSurvey));
+
+    if (response.statusCode == 200) {
+      final String responseBody = utf8.decode(response.bodyBytes);
+      final dynamic data = jsonDecode(responseBody);
+
+      print(response.body);
+      setState(() {
+        countOfType = data;
+      });
+    } else {
+      throw Exception('Failed to load count survey by type');
+    }
+  }
+
+  Future<void> fetchSurveyAllCount() async {
+    String getCountAllSurvey = '$SurveybaseURL/getCountAll';
+
+    final response = await http.get(Uri.parse(getCountAllSurvey));
+
+    if (response.statusCode == 200) {
+      final String responseBody = utf8.decode(response.bodyBytes);
+      final dynamic data = jsonDecode(responseBody);
+
+      print(response.body);
+      setState(() {
+        allTypeCount = data;
+      });
+      print(allTypeCount);
+    } else {
+      throw Exception('Failed to load survey all count');
+    }
   }
 
   @override
@@ -139,15 +186,17 @@ class _SurveyPageState extends State<SurveyPage> {
                           onTap: (index) {
                             if(index == 0) {
                               setState(() {
-                                documentName = 'a';
+                                fetchSurveyAllCount();
                               });
                             } else if(index == 1) {
                               setState(() {
-                                documentName = 'b';
+                                surveyType = 1;
+                                fetchSurveyCount(surveyType);
                               });
                             } else {
                               setState(() {
-                                documentName = 'c';
+                                surveyType = 2;
+                                fetchSurveyCount(surveyType);
                               });
                             }
                           },
@@ -161,23 +210,23 @@ class _SurveyPageState extends State<SurveyPage> {
                           children: [
                             ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemCount: allTypeCount,
                               itemBuilder: (context, index) {
-                                // return NoticeListView(documentName: documentName);
+                                return SurveyListView();
                               },
                             ),
                             ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemCount: countOfType,
                               itemBuilder: (context, index) {
-                                // return NoticeListView(documentName: documentName);
+                                return SurveyTypeListView(surveyType: surveyType);
                               },
                             ),
                             ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: 1, // 데이터 개수에 맞게 조정
+                              itemCount: countOfType, // 데이터 개수에 맞게 조정
                               itemBuilder: (context, index) {
-                                // return NoticeListView(documentName: documentName);
+                                return SurveyTypeListView(surveyType: surveyType);
                               },
                             ),
                           ],

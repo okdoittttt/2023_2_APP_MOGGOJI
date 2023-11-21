@@ -1,8 +1,8 @@
 class Survey {
-  double survey_number;
-  int survey_type;
-  String survey_title;
-  String survey_creator;
+  int surveyNumber;
+  int surveyType;
+  String surveyTitle;
+  String surveyCreator;
   String content1;
   String content2;
   String content3;
@@ -20,10 +20,10 @@ class Survey {
   String content15;
 
   Survey({
-    required this.survey_number,
-    required this.survey_type,
-    required this.survey_title,
-    required this.survey_creator,
+    required this.surveyNumber,
+    required this.surveyType,
+    required this.surveyTitle,
+    required this.surveyCreator,
     required this.content1,
     required this.content2,
     required this.content3,
@@ -43,10 +43,10 @@ class Survey {
 
   factory Survey.fromJson(Map<String, dynamic> json) {
     return Survey(
-        survey_number: json['survey_number'],
-        survey_title: json['survey_title'],
-        survey_type: json['survey_type'],
-        survey_creator: json['survey_creator'],
+        surveyNumber: json['surveyNumber'],
+        surveyTitle: json['surveyTitle'],
+        surveyType: json['surveyType'],
+        surveyCreator: json['surveyCreator'],
         content1: json['content1'],
         content2: json['content2'],
         content3: json['content3'],

@@ -20,10 +20,10 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
   final _registNoteKey = GlobalKey<FormState>();
 
   Survey survey = Survey(
-      survey_number: 0,
-      survey_title: '',
-      survey_type: 0,
-      survey_creator: 'sonny',
+      surveyNumber: 0,
+      surveyTitle: '',
+      surveyType: 0,
+      surveyCreator: 'sonny',
       content1: '',
       content2: '',
       content3: '',
@@ -44,10 +44,10 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
     var res = await http.post(Uri.parse(addSurvey),
         headers: headers,
         body: json.encode({
-          'survey_number': survey.survey_number,
-          'survey_title': survey.survey_title,
-          'survey_type': survey.survey_type,
-          'survey_creator': survey.survey_creator,
+          'surveyNumber': survey.surveyNumber,
+          'surveyTitle': survey.surveyTitle,
+          'surveyType': survey.surveyType,
+          'surveyCreator': survey.surveyCreator,
           'content1': survey.content1,
           'content2': survey.content2,
           'content3': survey.content3,
@@ -96,7 +96,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                           ),
                           TextButton(
                               onPressed: (){
-                                if(survey.survey_title == '') {
+                                if(survey.surveyTitle == '') {
                                   Navigator.pop(context);
                                   showDialog(context: context, builder: (context){
                                     return ShowAlertDialogFillOut(
@@ -105,7 +105,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                                     );
                                   });
                                 } else {
-                                  survey.survey_type = 1;
+                                  survey.surveyType = 1;
                                   save();
                                   Navigator.push(context,
                                       // MaterialPageRoute(builder: (context)=>SurveyPage()))
@@ -130,7 +130,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
             child: TextFormField(
               onChanged: (value) {
                 setState(() {
-                  survey.survey_title = value;
+                  survey.surveyTitle = value;
                 });
               },
               decoration: InputDecoration(
