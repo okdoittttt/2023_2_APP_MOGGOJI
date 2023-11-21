@@ -58,5 +58,15 @@ public class AttendanceController {
         return ResponseEntity.ok("참가 인원 업데이트 완료");
     }
 
+    @GetMapping("/partiMumbers/{id}")
+    public List<String> partyMumbers(@PathVariable long id) {
+        ScheduleItem scheduleItem = scheduleRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 id가 존재하지 않음."));
+
+        String listOfNames = scheduleItem.getParticipantName();
+
+        List<String> nameList = Arrays.asList(listOfNames.split(", "));
+
+        return nameList;
+    }
 
 }
