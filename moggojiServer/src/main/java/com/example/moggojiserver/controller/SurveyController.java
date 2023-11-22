@@ -32,10 +32,20 @@ public class SurveyController {
         return surveyRepository.save(dto);
     }
 
-    @GetMapping(value = "/getSurveyByNumber/{survey_number}")
-    public List<SurveyItem> findSurveyByNumber(@PathVariable int survey_number) {
-        List<SurveyItem> surveyItems = surveyRepository.findById(survey_number);
+    @GetMapping(value = "/getSurveyByType/{surveyType}")
+    public List<SurveyItem> findSurveyByType(@PathVariable int surveyType) {
+        List<SurveyItem> surveyItems = surveyRepository.findBySurveyType(surveyType);
 
         return surveyItems;
+    }
+
+    @GetMapping(value = "/getCountByType/{surveyType}")
+    public long findCountByType(@PathVariable int surveyType) {
+        return surveyRepository.countBySurveyType(surveyType);
+    }
+
+    @GetMapping(value = "/getCountAll")
+    public long countAll() {
+        return surveyRepository.count();
     }
 }
