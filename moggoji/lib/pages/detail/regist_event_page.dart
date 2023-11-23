@@ -26,7 +26,8 @@ class _RegistEventPageState extends State<RegistEventPage> {
       location: '',
       date: '',
       content: '',
-      fee: 0);
+      fee: 0,
+      participantName: 'sonny');
 
   Future save() async {
     var res = await http.post(Uri.parse(addTask),
@@ -37,7 +38,8 @@ class _RegistEventPageState extends State<RegistEventPage> {
           'location': schedule.location,
           'date': schedule.date,
           'content': schedule.content,
-          'fee': schedule.fee
+          'fee': schedule.fee,
+          "participantName": schedule.participantName
         }));
 
     print(res.body);

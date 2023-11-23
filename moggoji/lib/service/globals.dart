@@ -14,6 +14,14 @@ const String imageDisplayURL = "$imagebaseURL/display";
 const String TaskbaseURL = "http://localhost:9191/schedule";
 const String getTask = "$TaskbaseURL/";
 const String addTask = "$TaskbaseURL/addSchedule";
+// const String recordName = "$TaskbaseURL/attendance/recordName";
+
+// 출석 관리 API URL
+const String AttendanceURL = "http://localhost:9191/attendance";
+const String recordName = "$AttendanceURL/recordName";
+const String checkNumberURL = "$AttendanceURL/checkNumber";
+const String generateNumber = "$AttendanceURL/generateNumber";
+const String attendance = "$AttendanceURL/attenController";
 
 
 // 공지사항 관리 API URL
