@@ -58,6 +58,21 @@ public class AttendanceController {
         return ResponseEntity.ok("참가 인원 업데이트 완료");
     }
 
+    @PostMapping("/attenController/{id}/{userName}")
+    public ResponseEntity<String> attenCon(@PathVariable long id, @PathVariable String userName) {
+        ScheduleItem scheduleItem = scheduleRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 아이디가 존재하지 않음."));
+
+        String currentAttenList = scheduleItem.getParicipiantList();
+
+        String updateAttenList = currentAttenList + ", " + userName;
+
+        scheduleItem.setParicipiantList(updateAttenList);
+
+        scheduleRepository.save(scheduleItem);
+
+        return ResponseEntity.ok("출석체크 완료");
+    }
+
     @GetMapping("/partiMumbers/{id}")
     public List<String> partyMumbers(@PathVariable long id) {
         ScheduleItem scheduleItem = scheduleRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 id가 존재하지 않음."));

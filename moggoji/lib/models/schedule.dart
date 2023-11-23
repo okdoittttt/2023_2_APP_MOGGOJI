@@ -6,6 +6,7 @@ class Schedule {
   String date;
   String content;
   int fee;
+  String participantName;
 
   Schedule(
       {required this.number,
@@ -14,7 +15,8 @@ class Schedule {
       required this.location,
       required this.date,
       required this.content,
-      required this.fee});
+      required this.fee,
+      required this.participantName});
 
   // FromJson으로 받는 방식
   factory Schedule.fromJson(Map<String, dynamic> json) {
@@ -25,16 +27,7 @@ class Schedule {
         location: json['location'],
         date: json['date'],
         content: json['content'],
-        fee: json['fee']);
+        fee: json['fee'],
+        participantName: json['participantName']);
   }
-
-  // fromMap으로 받는 방식
-  // factory Schedule.fromMap(Map scheduleMap) {
-  //   return Schedule(
-  //       number: scheduleMap['number'],
-  //       title: scheduleMap['title'],
-  //       writer: scheduleMap['writer'],
-  //       location: scheduleMap['location'],
-  //       date: scheduleMap['date']);
-  // }
 }

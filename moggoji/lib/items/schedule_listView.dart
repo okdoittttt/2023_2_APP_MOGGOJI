@@ -3,13 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/service/attendance.dart';
 
 import '../models/schedule.dart';
 import '../service/globals.dart';
+import '../service/jwtTokenUnit.dart';
 
 class ListViewPage extends StatefulWidget {
-  const ListViewPage({super.key});
+  final String userName;
+  final int userNumber;
+  const ListViewPage(
+      {Key? key, required this.userName, required this.userNumber})
+      : super(key: key);
 
   @override
   State<ListViewPage> createState() => _ListViewPageState();
@@ -18,11 +25,12 @@ class ListViewPage extends StatefulWidget {
 class _ListViewPageState extends State<ListViewPage> {
   List<Schedule> schedules = [];
   int enrollNum = 0;
+  int randomNumberTest = 0;
 
   @override
   void initState() {
-    super.initState();
     fetchSchedules();
+    super.initState();
   }
 
   // 데이터를 가져 올 함수 정의
@@ -41,6 +49,31 @@ class _ListViewPageState extends State<ListViewPage> {
     }
   }
 
+  Future<void> generateRandomNumber() async {
+    final response = await http.get(Uri.parse(generateNumber));
+    int randomNumber = 0;
+    if (response.statusCode == 200) {
+      randomNumber = json.decode(response.body);
+    }
+
+    setState(() {
+      randomNumberTest = randomNumber;
+    });
+  }
+
+  // 출석등록 (변수이름 잘 못 설정함)
+  Future<void> postNumber(String postURL) async {
+    final response = await http.post(Uri.parse(postURL));
+  }
+
+  // 번호 확인
+  Future<void> checkNumber(int enteredNumber) async {
+    String postURL = "${checkNumberURL}/$enteredNumber";
+    final response = await http.post(Uri.parse(postURL));
+  }
+
+  String resultName = '';
+  int enteredNumber = 0;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -57,17 +90,19 @@ class _ListViewPageState extends State<ListViewPage> {
         print('${schedule.title} : $differenceDate');
 
         String dDayText = '';
-        if(differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 1) {
+        if (differenceDate.inDays == 0 &&
+            scheduleDate.day - currentDate.day == 1) {
           dDayText = 'D-1';
-        } else if(differenceDate.inDays > 0) {
-          dDayText = 'D-${(differenceDate.inHours/24).round()}';
-        } else if (differenceDate.inDays == 0 && scheduleDate.day - currentDate.day == 0) {
+        } else if (differenceDate.inDays > 0) {
+          dDayText = 'D-${(differenceDate.inHours / 24).round()}';
+        } else if (differenceDate.inDays == 0 &&
+            scheduleDate.day - currentDate.day == 0) {
           dDayText = 'D-Day';
         } else {
-          dDayText = 'D+${-(differenceDate.inHours/24).round()}';
+          dDayText = 'D+${-(differenceDate.inHours / 24).round()}';
         }
 
-        String weekDayText ='';
+        String weekDayText = '';
         switch (scheduleDate.weekday) {
           case 1:
             weekDayText = '월';
@@ -91,7 +126,6 @@ class _ListViewPageState extends State<ListViewPage> {
             weekDayText = '일';
             break;
         }
-
         return Container(
           decoration: BoxDecoration(
               color: Color(0xFFFFFFFF),
@@ -100,10 +134,8 @@ class _ListViewPageState extends State<ListViewPage> {
                 BoxShadow(
                     color: Colors.blueAccent.shade100,
                     blurRadius: 5,
-                    offset: Offset(2.2, 2.2)
-                )
-              ]
-          ),
+                    offset: Offset(2.2, 2.2))
+              ]),
           margin: EdgeInsets.fromLTRB(18, 10, 18, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,50 +150,58 @@ class _ListViewPageState extends State<ListViewPage> {
                       children: [
                         Row(
                           children: [
-                            Text('${DateFormat("MM/dd").format(DateTime.parse(schedule.date))}($weekDayText)',
+                            Text(
+                              '${DateFormat("MM/dd").format(DateTime.parse(schedule.date))}($weekDayText)',
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
-                                  letterSpacing: 2
-                              ),),
+                                  letterSpacing: 2),
+                            ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
                               /* JSON 날짜 데이터 - 오늘 날짜 */
-                              child: Text(dDayText,
+                              child: Text(
+                                dDayText,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.redAccent,
-                                ),),
+                                ),
+                              ),
                             ),
-                          ],),
+                          ],
+                        ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 5, 0, 0),
-                          child: Text(schedule.title,
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                          child: Text(
+                            schedule.title,
                             overflow: TextOverflow.visible,
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                letterSpacing: 2
-                            ),
+                                letterSpacing: 2),
                           ),
                         ),
                       ],
                     ),
                     trailing: ElevatedButton(
-                      onPressed: differenceDate.inSeconds <= 0
-                          ? null
-                          : () {},
+                      // onPressed: differenceDate.inSeconds <= 0
+                      //     ? null
+                      //     : () {},
+                      onPressed: () {
+                        // 참여 기능 ... (모달창 미구현) awit가 안됨. -> response의 statusCode를 확인할 수 없음.
+                        String recordNameURL =
+                            "$recordName/${schedule.number}/${widget.userName}";
+                        final response = http.post(Uri.parse(recordNameURL));
+                      },
                       style: ButtonStyle(
-                          shape: MaterialStatePropertyAll<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
-                              )
-                          )
-                      ),
+                          shape:
+                              MaterialStatePropertyAll<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10)))),
                       child: Text("참여"),
                     ),
                   ),
@@ -181,24 +221,28 @@ class _ListViewPageState extends State<ListViewPage> {
                           SizedBox(
                             height: 30,
                             child: ListTile(
-                              visualDensity: VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              leading: Text("날짜",
+                              visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Text(
+                                "날짜",
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey,
                                 ),
                               ),
                               // title: Text(schedule.date),
-                              title: Text('${DateFormat("yy-MM-dd").format(DateTime.parse(schedule.date))}($weekDayText) ${DateFormat("HH:mm").format(DateTime.parse(schedule.date))}',),
+                              title: Text(
+                                '${DateFormat("yy-MM-dd").format(DateTime.parse(schedule.date))}($weekDayText) ${DateFormat("HH:mm").format(DateTime.parse(schedule.date))}',
+                              ),
                             ),
                           ),
                           SizedBox(
                             height: 30,
                             child: ListTile(
-                              visualDensity: VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              leading: Text("장소",
+                              visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Text(
+                                "장소",
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey,
@@ -210,9 +254,10 @@ class _ListViewPageState extends State<ListViewPage> {
                           SizedBox(
                             height: 30,
                             child: ListTile(
-                              visualDensity: VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              leading: Text("내용",
+                              visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Text(
+                                "내용",
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey,
@@ -224,9 +269,10 @@ class _ListViewPageState extends State<ListViewPage> {
                           SizedBox(
                             height: 30,
                             child: ListTile(
-                              visualDensity: VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              leading: Text("금액",
+                              visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Text(
+                                "금액",
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey,
@@ -239,105 +285,85 @@ class _ListViewPageState extends State<ListViewPage> {
                           SizedBox(
                             height: 30,
                             child: ListTile(
-                              visualDensity: VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              leading: Text("참여",
+                              visualDensity:
+                                  VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Text(
+                                "참여",
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey,
                                 ),
                               ),
-                              title: Text(
-                                  "${schedule.date.substring(11,13)} 명"),
+                              title: Text("${schedule.participantName}"),
                             ),
                           ),
                         ],
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: differenceDate.inSeconds >= 0
-                          ? (){}//null
-                          : () {
-                        showDialog(
-                            context: context,
-                            builder: (context){
-                              return GestureDetector(
-                                onTap: (){
-                                  FocusScope.of(context).unfocus();
-                                },
-                                child: Dialog(
-                                  child: Container(
-                                    height: 180,
-                                    margin: EdgeInsetsDirectional.symmetric(vertical: 10.0, horizontal: 30.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              enrollNum = int.parse(value);
-                                              print(enrollNum);
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            label: Text("출석"),
-                                            hintText: "인증번호",
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(15)
-                                            )
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                          child: ElevatedButton(
-                                              onPressed: (){
-                                                if(enrollNum == 0 || enrollNum / 100 < 1 || enrollNum / 100 >= 10) {
-                                                  showDialog(context: context, builder: (context){
-                                                    return ShowAlertDialogFillOut(
-                                                        title:"인증번호 오류!!",
-                                                        content: "100 ~ 999 사이의 인증번호를 입력해주세요!"
-                                                    );
-                                                  });
-                                                } else {
-                                                  Navigator.pop(context);
-                                                  showDialog(context: context, builder: (context){
-                                                    return AlertDialog(
-                                                      title: Text("출석 완료"),
-                                                      content: Text("출석을 완료했습니다!"),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                            onPressed: (){
-                                                              Navigator.pop(context);
-                                                              },
-                                                            child: Text("완료")
-                                                        )
-                                                      ],
-                                                    );
-                                                  });
-                                                }
-                                              },
-                                              child: Text("출석")
-                                          ),
-                                        )
-                                      ],
+                        onPressed: () {
+                          if (widget.userNumber == 0) {
+                            generateRandomNumber();
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("출석번호 생성"),
+                                    content: Text(
+                                      "${randomNumberTest}",
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      style: ButtonStyle(
-                          shape: MaterialStatePropertyAll<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
-                              )
-                          )
-                      ),
-                      child: Text("출석"),
-                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("닫기"),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          } else {
+                            String postURL = "${attendance}/${schedule.number}/${widget.userName}";
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("출석번호 생성"),
+                                    content: TextField(
+                                      onChanged: (val) {
+                                        enteredNumber = int.tryParse(val) ?? 0;
+                                      },
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          checkNumber(enteredNumber);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("출석번호 확인"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          postNumber(postURL);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("확인"),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }
+                        },
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)))),
+                        child: Text("출석")),
                   ],
                 ),
               ),

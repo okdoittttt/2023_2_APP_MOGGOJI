@@ -100,8 +100,6 @@ class _MorePageState extends State<MorePage> {
     } else {
       throw Exception('Failed to load Image');
     }
-
-
   }
 
   @override

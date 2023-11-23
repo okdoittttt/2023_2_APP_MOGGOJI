@@ -41,4 +41,6 @@ public class ScheduleItem {
     private int fee;
 
     private String participantName;
+
+    private String paricipiantList;
 }
