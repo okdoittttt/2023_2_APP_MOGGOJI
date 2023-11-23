@@ -62,7 +62,7 @@ public class UserService {
         }
 
         // Generate Token
-        String token = JwtTokenUtil.createToken(selectedUser.getId(), selectedUser.getEmail(), selectedUser.getName(), selectedUser.getGender(), selectedUser.getAge(), selectedUser.getImageNumber(), key,  expireTimeMs);
+        String token = JwtTokenUtil.createToken(selectedUser.getNumber(), selectedUser.getId(), selectedUser.getEmail(), selectedUser.getName(), selectedUser.getGender(), selectedUser.getAge(), selectedUser.getImageNumber(), key,  expireTimeMs);
 
         return token;
     }
