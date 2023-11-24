@@ -35,5 +35,6 @@ const String SurveybaseURL = "http://localhost:9191/survey";
 const String addSurvey = "$SurveybaseURL/addSurvey";
 const String getAllSurvey = "$SurveybaseURL/getAllSurvey";
 const String findSurveyByTypeURL = "$SurveybaseURL/getSurveyByType";
-const String getCountByTypeURL = "$SurveybaseURL/getCountByType";
-const String getCountAllURL = "$SurveybaseURL/getCountAll";
+
+const String AnswerbaseURL = "http://localhost:9191/answer";
+const String addAnswer = "$AnswerbaseURL/addAnswer";
