@@ -4,7 +4,10 @@ import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 import 'package:moggoji/pages/survey_page.dart';
 
 class SubmitSurveyOx extends StatefulWidget {
-  const SubmitSurveyOx({super.key});
+  final String surveyTitle;
+
+  const SubmitSurveyOx({Key? key, required this.surveyTitle})
+      : super(key: key);
 
   @override
   State<SubmitSurveyOx> createState() => _SubmitSurveyOxState();
@@ -65,7 +68,7 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("설문제목",
+            child: Text(widget.surveyTitle,
               style: TextStyle(fontSize: 20.0),) //db에서 가져오기
           ),
           Padding(

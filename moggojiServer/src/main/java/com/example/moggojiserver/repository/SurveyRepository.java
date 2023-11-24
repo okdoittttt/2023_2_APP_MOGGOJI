@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface SurveyRepository extends JpaRepository<SurveyItem, Long> {
     List<SurveyItem> findBySurveyType(int surveyType);
-    long countBySurveyType(int surveyType);
 }

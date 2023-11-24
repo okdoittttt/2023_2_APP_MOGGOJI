@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
 
-import 'package:moggoji/pages/detail/submit_survey_ox_page.dart';
+import 'package:moggoji/pages/survey_page.dart';
 import '../../models/survey.dart';
 import '../../service/globals.dart';
 
@@ -108,8 +108,7 @@ class _RegistSurveyOxPageState extends State<RegistSurveyOxPage> {
                                   survey.surveyType = 1;
                                   save();
                                   Navigator.push(context,
-                                      // MaterialPageRoute(builder: (context)=>SurveyPage()))
-                                      MaterialPageRoute(builder: (context)=>SubmitSurveyOx()));
+                                      MaterialPageRoute(builder: (context)=>SurveyPage()));
                                 }
                           },
                               child: Text("등록")
