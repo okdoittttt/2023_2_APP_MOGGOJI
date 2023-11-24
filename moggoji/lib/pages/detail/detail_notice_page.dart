@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moggoji/items/notice_listView.dart';
 import 'package:moggoji/pages/notice_page.dart';
 
@@ -150,7 +151,7 @@ class _DetailNoticePageState extends State<DetailNoticePage> {
                                     ],
                                   ),
                                   Text(
-                                    widget.date,
+                                      '${DateFormat("yyyy/MM/dd HH:MM").format(DateTime.parse(widget.date))}',
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
