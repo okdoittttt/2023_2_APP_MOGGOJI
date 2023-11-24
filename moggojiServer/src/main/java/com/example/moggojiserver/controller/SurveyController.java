@@ -38,14 +38,4 @@ public class SurveyController {
 
         return surveyItems;
     }
-
-    @GetMapping(value = "/getCountByType/{surveyType}")
-    public long findCountByType(@PathVariable int surveyType) {
-        return surveyRepository.countBySurveyType(surveyType);
-    }
-
-    @GetMapping(value = "/getCountAll")
-    public long countAll() {
-        return surveyRepository.count();
-    }
 }
