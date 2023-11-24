@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
-import 'package:moggoji/pages/detail/submit_survey_form_page.dart';
 import 'package:moggoji/pages/survey_page.dart';
 import '../../models/survey.dart';
 import '../../service/globals.dart';
@@ -15,73 +14,38 @@ class AddForm {
   AddForm({required this.question});
 }
 
-void SwitchCase(Survey survey, int index, List addForm) {
-  switch(index) {
-      case 0: survey.content1 = addForm[index].question;
-          break;
-      case 1: survey.content2 = addForm[index].question;
-          break;
-      case 2: survey.content3 = addForm[index].question;
-          break;
-      case 3: survey.content4 = addForm[index].question;
-          break;
-      case 4: survey.content5 = addForm[index].question;
-          break;
-      case 5: survey.content6 = addForm[index].question;
-          break;
-      case 6: survey.content7 = addForm[index].question;
-          break;
-      case 7: survey.content8 = addForm[index].question;
-          break;
-      case 8: survey.content9 = addForm[index].question;
-          break;
-      case 9: survey.content10 = addForm[index].question;
-          break;
-      case 10: survey.content11 = addForm[index].question;
-          break;
-      case 11: survey.content12 = addForm[index].question;
-          break;
-      case 12: survey.content13 = addForm[index].question;
-          break;
-      case 13: survey.content14 = addForm[index].question;
-          break;
-      case 14: survey.content15 = addForm[index].question;
-          break;
-  }
-}
-
-void RemoveSwitchCase(Survey survey, int index) {
-  switch(index) {
-    case 0: survey.content1 = '';
-        break;
-    case 1: survey.content2 = '';
-        break;
-    case 2: survey.content3 = '';
-        break;
-    case 3: survey.content4 = '';
-        break;
-    case 4: survey.content5 = '';
-        break;
-    case 5: survey.content6 = '';
-        break;
-    case 6: survey.content7 = '';
-        break;
-    case 7: survey.content8 = '';
-        break;
-    case 8: survey.content9 = '';
-        break;
-    case 9: survey.content10 = '';
-        break;
-    case 10: survey.content11 = '';
-        break;
-    case 11: survey.content12 = '';
-        break;
-    case 12: survey.content13 = '';
-        break;
-    case 13: survey.content14 = '';
-        break;
-    case 14: survey.content15 = '';
-        break;
+void switchCase(Survey survey, int surveyIndex, List addForm, int index) {
+  switch(surveyIndex) {
+    case 0: survey.content1 = addForm[index].question;
+    break;
+    case 1: survey.content2 = addForm[index].question;
+    break;
+    case 2: survey.content3 = addForm[index].question;
+    break;
+    case 3: survey.content4 = addForm[index].question;
+    break;
+    case 4: survey.content5 = addForm[index].question;
+    break;
+    case 5: survey.content6 = addForm[index].question;
+    break;
+    case 6: survey.content7 = addForm[index].question;
+    break;
+    case 7: survey.content8 = addForm[index].question;
+    break;
+    case 8: survey.content9 = addForm[index].question;
+    break;
+    case 9: survey.content10 = addForm[index].question;
+    break;
+    case 10: survey.content11 = addForm[index].question;
+    break;
+    case 11: survey.content12 = addForm[index].question;
+    break;
+    case 12: survey.content13 = addForm[index].question;
+    break;
+    case 13: survey.content14 = addForm[index].question;
+    break;
+    case 14: survey.content15 = addForm[index].question;
+    break;
   }
 }
 
@@ -151,6 +115,16 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    void saveContents(Survey survey, List addForm) {
+      int index = 0;
+      for(int i=0; i<addForm.length; i++) {
+        if(addForm[i].question != '') {
+          switchCase(survey, index++, addForm, i);
+        }
+      }
+    }
+
     return GestureDetector(
       onTap: (){
         FocusScope.of(context).unfocus();
@@ -184,10 +158,10 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                 });
                                 } else {
                                   survey.surveyType = 2;
+                                  saveContents(survey, addForm);
                                   save();
                                   Navigator.push(context,
-                                      // MaterialPageRoute(builder: (context)=>SurveyPage()));
-                                      MaterialPageRoute(builder: (context)=>SubmitSurveyForm()));
+                                      MaterialPageRoute(builder: (context)=>SurveyPage()));
                               }
                           },
                               child: Text("등록")
@@ -261,8 +235,8 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                               setState(() {
                                                 addForm.add(AddForm(
                                                     question: question));
+                                                indexOfQuestion++;
                                                 print(indexOfQuestion);
-                                                SwitchCase(survey, indexOfQuestion++, addForm);
                                               });
                                               Navigator.pop(context);
                                             }
@@ -340,7 +314,6 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                                           } else {
                                                             setState(() {
                                                               addForm[index] = AddForm(question: question);
-                                                              SwitchCase(survey, index, addForm);
                                                             });
                                                             Navigator.pop(context);
                                                           }
@@ -360,7 +333,7 @@ class _RegistSurveyFormPageState extends State<RegistSurveyFormPage> {
                                           onPressed: (){
                                             setState(() {
                                               addForm.removeAt(index);
-                                              RemoveSwitchCase(survey, index);
+                                              indexOfQuestion--;
                                             });
                                           },
                                           icon: Icon(Icons.delete_forever_rounded),

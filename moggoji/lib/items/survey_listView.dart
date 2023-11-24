@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moggoji/pages/detail/submit_survey_form_page.dart';
+import 'package:moggoji/pages/detail/submit_survey_ox_page.dart';
 import '../models/survey.dart';
 import '../service/globals.dart';
 
@@ -54,16 +56,37 @@ class _SurveyListViewState extends State<SurveyListView> {
 
             return GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => DetailNoticePage(
-                //       title: notice.title,
-                //       category: notice.category,
-                //       content: notice.content,
-                //       date: notice.date,
-                //       writer: notice.writer,
-                //     ))
-                // );
+                if(survey.surveyType == 1) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SubmitSurveyOx(
+                        surveyTitle: survey.surveyTitle,
+                      ))
+                  );
+                } else if(survey.surveyType == 2) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SubmitSurveyForm(
+                        surveyNumber: survey.surveyNumber,
+                        surveyTitle: survey.surveyTitle,
+                        content1: survey.content1,
+                        content2: survey.content2,
+                        content3: survey.content3,
+                        content4: survey.content4,
+                        content5: survey.content5,
+                        content6: survey.content6,
+                        content7: survey.content7,
+                        content8: survey.content8,
+                        content9: survey.content9,
+                        content10: survey.content10,
+                        content11: survey.content11,
+                        content12: survey.content12,
+                        content13: survey.content13,
+                        content14: survey.content14,
+                        content15: survey.content15,
+                      ))
+                  );
+                }
               },
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
