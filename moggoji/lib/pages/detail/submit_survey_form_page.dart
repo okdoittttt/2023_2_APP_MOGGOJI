@@ -8,6 +8,7 @@ import 'package:moggoji/pages/survey_page.dart';
 import 'package:moggoji/service/globals.dart';
 import 'package:http/http.dart' as http;
 import '../../models/answer.dart';
+import '../../service/jwtTokenUnit.dart';
 
 enum Title { fillOut, chart }
 
@@ -79,6 +80,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
     surveyType: 2,
     surveyTitle: '',
     surveyCreator: 'sonny',
+    respondent: 'sonny',
     answer1: 0,
     answer2: 0,
     answer3: 0,
@@ -97,10 +99,22 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
 
   List<Answer> answersList = [];
 
+  String userName = '';
+
   @override
   void initState() {
     super.initState();
     fetchAnswers();
+    fetchUserInfo();
+  }
+
+  void fetchUserInfo() async {
+    JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
+    await jwtTokenUtil.getUserInfo();
+
+    setState(() {
+      userName = jwtTokenUtil.userName ?? "";
+    });
   }
 
   Future<void> fetchAnswers() async {
@@ -209,6 +223,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
           'surveyType':answer.surveyType,
           'surveyTitle':answer.surveyTitle,
           'surveyCreator':answer.surveyCreator,
+          'respondent':answer.respondent,
           'answer1':answer.answer1,
           'answer2':answer.answer2,
           'answer3':answer.answer3,
@@ -328,6 +343,90 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
     }
   }
 
+  void checkValue(int index) {
+    for(int i=0; i <= index; i++) {
+      switch(i) {
+        case 0:
+          if(answer.answer1 == 0) {
+            answer.answer1 = 3;
+          }
+          break;
+        case 1:
+          if(answer.answer2 == 0) {
+            answer.answer2 = 3;
+          }
+          break;
+        case 2:
+          if(answer.answer3 == 0) {
+            answer.answer3 = 3;
+          }
+          break;
+        case 3:
+          if(answer.answer4 == 0) {
+            answer.answer4 = 3;
+          }
+          break;
+        case 4:
+          if(answer.answer5 == 0) {
+            answer.answer5 = 3;
+          }
+          break;
+        case 5:
+          if(answer.answer6 == 0) {
+            answer.answer6 = 3;
+          }
+          break;
+        case 6:
+          if(answer.answer7 == 0) {
+            answer.answer7 = 3;
+          }
+          break;
+        case 7:
+          if(answer.answer8 == 0) {
+            answer.answer8 = 3;
+          }
+          break;
+        case 8:
+          if(answer.answer9 == 0) {
+            answer.answer9 = 3;
+          }
+          break;
+        case 9:
+          if(answer.answer10 == 0) {
+            answer.answer10 = 3;
+          }
+          break;
+        case 10:
+          if(answer.answer11 == 0) {
+            answer.answer11 = 3;
+          }
+          break;
+        case 11:
+          if(answer.answer12 == 0) {
+            answer.answer12 = 3;
+          }
+          break;
+        case 12:
+          if(answer.answer13 == 0) {
+            answer.answer13 = 3;
+          }
+          break;
+        case 13:
+          if(answer.answer14 == 0) {
+            answer.answer14 = 3;
+          }
+          break;
+        case 14:
+          if(answer.answer15 == 0) {
+            answer.answer15 = 3;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -416,6 +515,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                           } else {
                             answer.surveyNumber = widget.surveyNumber;
                             answer.surveyTitle = widget.surveyTitle;
+                            answer.respondent = userName;
                             save();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));
                           }
@@ -470,6 +570,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                 itemCount: contents.length,
                 itemBuilder: (context, index) {
                   if(_selectedTitle.name == "fillOut" && contents[index] != '') {
+                    checkValue(index);
                     return Container(
                       margin: EdgeInsetsDirectional.symmetric(vertical: 10.0),
                       child: Column(
