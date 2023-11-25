@@ -19,7 +19,7 @@ public class AnserController {
     private AnswerRepository answerRepository;
 
     @GetMapping(value = "/getAllAnswer")
-    public List<AnswerItem> getAllAnser() {
+    public List<AnswerItem> getAllAnswer() {
         return answerRepository.findAll();
     }
 
@@ -34,5 +34,10 @@ public class AnserController {
         Optional<AnswerItem> answerItems = answerRepository.findById(respondent);
 
         return answerItems;
+    }
+
+    @GetMapping(value = "/getAllBySurveyNumber/{surveyNumber}")
+    public List<AnswerItem> getAllBySurveyNumber(@PathVariable long surveyNumber) {
+        return answerRepository.findAllBySurveyNumber(surveyNumber);
     }
 }

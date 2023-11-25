@@ -6,11 +6,22 @@ import '../resources/color_extensions.dart';
 
 class ShowChartSurvey extends StatefulWidget {
   final String surveyTitle;
+  final int answer1Count;
+  final int answer2Count;
+  final int answer3Count;
+  final int answer4Count;
+  final int answer5Count;
 
   ShowChartSurvey({
     Key? key,
-    required this.surveyTitle
-  });
+    required this.surveyTitle,
+    required this.answer1Count,
+    required this.answer2Count,
+    required this.answer3Count,
+    required this.answer4Count,
+    required this.answer5Count,
+  })
+  : super(key: key);
 
   List<Color> get availableColors => const <Color>[
     AppColors.contentColorPurple,
@@ -108,7 +119,7 @@ class _ShowChartSurveyState extends State<ShowChartSurvey> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 20,  // y축 최대값
+            toY: (widget.answer1Count + widget.answer2Count + widget.answer3Count + widget.answer4Count + widget.answer5Count).toDouble(),  // y축 최대값
             color: widget.barBackgroundColor,
           ),
         ),
@@ -120,15 +131,15 @@ class _ShowChartSurveyState extends State<ShowChartSurvey> {
   List<BarChartGroupData> showingGroups() => List.generate(5, (i) {
     switch (i) {
       case 0:
-        return makeGroupData(0, 1, isTouched: i == touchedIndex); // 2번째값 -> 선택한 수
+        return makeGroupData(0, widget.answer1Count.toDouble(), isTouched: i == touchedIndex); // 2번째값 -> 선택한 수
       case 1:
-        return makeGroupData(1, 2, isTouched: i == touchedIndex);
+        return makeGroupData(1, widget.answer2Count.toDouble(), isTouched: i == touchedIndex);
       case 2:
-        return makeGroupData(2, 3, isTouched: i == touchedIndex);
+        return makeGroupData(2, widget.answer3Count.toDouble(), isTouched: i == touchedIndex);
       case 3:
-        return makeGroupData(3, 4, isTouched: i == touchedIndex);
+        return makeGroupData(3, widget.answer4Count.toDouble(), isTouched: i == touchedIndex);
       case 4:
-        return makeGroupData(4, 9, isTouched: i == touchedIndex);
+        return makeGroupData(4, widget.answer5Count.toDouble(), isTouched: i == touchedIndex);
       default:
         return throw Error();
     }

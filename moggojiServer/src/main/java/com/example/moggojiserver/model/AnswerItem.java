@@ -19,11 +19,11 @@ public class AnswerItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long number;
 
-    private long survey_number;
-    private int survey_type;
-    private String survey_creator;
+    private long surveyNumber;
+    private int surveyType;
+    private String surveyCreator;
     private String respondent;
-    private String survey_title;
+    private String surveyTitle;
 
 
     private int answer1;
