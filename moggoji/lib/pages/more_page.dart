@@ -30,76 +30,26 @@ class _MorePageState extends State<MorePage> {
   int userImgNumber = 0;
   // int userAge = '';
 
-  Uint8List test = Uint8List.fromList([]);
+  Uint8List imageData = Uint8List.fromList([]);
   @override
   void initState() {
-    fetchData();
     super.initState();
+    fetchUserInfo();
   }
 
-  Future logout() async {
-    var res = await http.post(Uri.parse(logoutURL),
-      headers: headers,
-    );
-  }
-
-  Future<void> fetchData() async {
+  void fetchUserInfo() async {
     JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
-    String? token = await jwtTokenUtil.loadToken();
+    await jwtTokenUtil.getUserInfo();
 
-    print("========================== Token Test ==========================");
-    print(token);
+    setState(() {
+      userId = jwtTokenUtil.userId ?? "";
+      userEmail = jwtTokenUtil.userEmail ?? "";
+      userName = jwtTokenUtil.userName ?? "";
+      userGender = jwtTokenUtil.userGender ?? "";
+      userImgNumber = jwtTokenUtil.userImgNumber ?? 0;
 
-    // 2차 유효성 검사
-    if (token != null) {
-      Map<String, String> headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
-
-      // token이 null이 아닐 때만 디코딩 수행
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      String userId = decodedToken["id"];
-      String userEmail = decodedToken["email"];
-      String userName = decodedToken["name"];
-      String userGender = decodedToken["gender"];
-      int userImgNumber = decodedToken["imageNumber"];
-      // String userAge = decodedToken["age"];
-      print("User ID : $userId");
-      print("User Email : $userEmail");
-      print("User Image Number : $userImgNumber");
-
-      setState(() {
-        this.userId = userId;
-        this.userEmail = userEmail;
-        this.userName = userName;
-        this.userGender = userGender;
-        this.userImgNumber = userImgNumber;
-        // this.userAge = userAge;
-      });
-
-    } else {
-      // token이 null인 경우에 대한 처리
-      print("Token is null. Unable to decode.");
-    }
-
-    // 이미지 불러오기
-    String imgURL = '$imageDisplayURL/${userImgNumber}';
-    print(imgURL);
-
-    final response = await http.get(Uri.parse(imgURL));
-
-    if (response.statusCode == 200) {
-      // 이미지 불러오기
-      Uint8List imageData = Uint8List.fromList(response.bodyBytes);
-      print(imageData.runtimeType);
-
-      setState(() {
-        this.test = imageData;
-      });
-    } else {
-      throw Exception('Failed to load Image');
-    }
+      imageData = jwtTokenUtil.imageDataList;
+    });
   }
 
   @override
@@ -146,7 +96,7 @@ class _MorePageState extends State<MorePage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(40),
                                     child: Image.memory(
-                                      test,
+                                      imageData,
                                       width: 60,
                                       height: 60,
                                       fit: BoxFit.cover,
@@ -354,3 +304,62 @@ class _MorePageState extends State<MorePage> {
           );
         }
 }
+
+// Future<void> fetchData() async {
+  // JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
+  // String? token = await jwtTokenUtil.loadToken();
+  //
+  // print("========================== Token Test ==========================");
+  // print(token);
+  //
+  // // 2차 유효성 검사
+  // if (token != null) {
+  //   Map<String, String> headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   // token이 null이 아닐 때만 디코딩 수행
+  //   Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+  //   String userId = decodedToken["id"];
+  //   String userEmail = decodedToken["email"];
+  //   String userName = decodedToken["name"];
+  //   String userGender = decodedToken["gender"];
+  //   int userImgNumber = decodedToken["imageNumber"];
+  //   // String userAge = decodedToken["age"];
+  //   print("User ID : $userId");
+  //   print("User Email : $userEmail");
+  //   print("User Image Number : $userImgNumber");
+  //
+  //   setState(() {
+  //     this.userId = userId;
+  //     this.userEmail = userEmail;
+  //     this.userName = userName;
+  //     this.userGender = userGender;
+  //     this.userImgNumber = userImgNumber;
+  //     // this.userAge = userAge;
+  //   });
+  //
+  // } else {
+  //   // token이 null인 경우에 대한 처리
+  //   print("Token is null. Unable to decode.");
+  // }
+
+  // 이미지 불러오기
+  // String imgURL = '$imageDisplayURL/${userImgNumber}';
+  // print(imgURL);
+  //
+  // final response = await http.get(Uri.parse(imgURL));
+  //
+  // if (response.statusCode == 200) {
+  //   // 이미지 불러오기
+  //   Uint8List imageData = Uint8List.fromList(response.bodyBytes);
+  //   print(imageData.runtimeType);
+  //
+  //   setState(() {
+  //     this.test = imageData;
+  //   });
+  // } else {
+  //   throw Exception('Failed to load Image');
+  // }
+// }
