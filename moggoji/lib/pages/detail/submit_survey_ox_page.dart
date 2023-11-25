@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/items/show_chart_ox.dart';
 import 'package:moggoji/pages/survey_page.dart';
+
+enum Title { checked, chart }
 
 class SubmitSurveyOx extends StatefulWidget {
   final String surveyTitle;
@@ -18,6 +21,8 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
   var setXBgColor = Colors.white70;
   var isOBtnOn = false;
   var isXBtnOn = false;
+
+  Title _selectedTitle = Title.checked;
 
   @override
   Widget build(BuildContext context) {
@@ -71,67 +76,108 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
             child: Text(widget.surveyTitle,
               style: TextStyle(fontSize: 20.0),) //db에서 가져오기
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Center(
-              child: SizedBox(
-                width: 350,
-                height: 250,
-                child: ElevatedButton(
-                    onPressed: ()=>(setState((){
-                      if(setOBgColor == Colors.white70) {
-                        setOBgColor = Colors.deepPurpleAccent.shade100;
-                        isOBtnOn = true;
-                        setXBgColor = Colors.white70;
-                      } else {
-                        isOBtnOn = false;
-                        setOBgColor = Colors.white70;
-                      }
-                      })
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(setOBgColor),
-                        shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.circular(60)
-                        ))
-                    ),
-                    child: Text("O",
-                      style: TextStyle(fontSize: 50.0),
-                    )
-                ),
-              ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsetsDirectional.symmetric(horizontal: 5.0),
+            child: SegmentedButton<Title>(
+                selected: <Title>{_selectedTitle},
+                onSelectionChanged: (Set<Title> newSelection){
+                  setState(() {
+                    _selectedTitle = newSelection.first;
+                  });
+                },
+                segments: const <ButtonSegment<Title>>[
+                  ButtonSegment<Title>(
+                      value: Title.checked,
+                      label: Text("OX 선택")
+                  ),
+                  ButtonSegment<Title>(
+                      value: Title.chart,
+                      label: Text("통계")
+                  )
+                ],
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),)
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Center(
-              child: SizedBox(
-                width: 350,
-                height: 250,
-                child: ElevatedButton(
-                    onPressed: ()=>(setState((){
-                      if(setXBgColor == Colors.white70) {
-                        setXBgColor = Colors.deepPurpleAccent.shade100;
-                        isXBtnOn = true;
-                        setOBgColor = Colors.white70;
-                      } else {
-                        isXBtnOn = false;
-                        setXBgColor = Colors.white70;
-                      }
-                    })),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(setXBgColor),
-                        shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(60)
-                        ))
-                    ),
-                    child: Text("X",
-                      style: TextStyle(fontSize: 50.0),
-                    )
-                ),
-              ),
-            ),
-          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  if(_selectedTitle.name == "checked") {
+                    return Container(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Center(
+                              child: SizedBox(
+                                width: 350,
+                                height: 250,
+                                child: ElevatedButton(
+                                    onPressed: ()=>(setState((){
+                                      if(setOBgColor == Colors.white70) {
+                                        setOBgColor = Colors.deepPurpleAccent.shade100;
+                                        isOBtnOn = true;
+                                        setXBgColor = Colors.white70;
+                                      } else {
+                                        isOBtnOn = false;
+                                        setOBgColor = Colors.white70;
+                                      }
+                                    })
+                                    ),
+                                    style: ButtonStyle(
+                                        backgroundColor: MaterialStatePropertyAll(setOBgColor),
+                                        shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+                                            borderRadius: BorderRadius.circular(60)
+                                        ))
+                                    ),
+                                    child: Text("O",
+                                      style: TextStyle(fontSize: 50.0),
+                                    )
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Center(
+                              child: SizedBox(
+                                width: 350,
+                                height: 250,
+                                child: ElevatedButton(
+                                    onPressed: ()=>(setState((){
+                                      if(setXBgColor == Colors.white70) {
+                                        setXBgColor = Colors.deepPurpleAccent.shade100;
+                                        isXBtnOn = true;
+                                        setOBgColor = Colors.white70;
+                                      } else {
+                                        isXBtnOn = false;
+                                        setXBgColor = Colors.white70;
+                                      }
+                                    })),
+                                    style: ButtonStyle(
+                                        backgroundColor: MaterialStatePropertyAll(setXBgColor),
+                                        shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+                                            borderRadius: BorderRadius.circular(60)
+                                        ))
+                                    ),
+                                    child: Text("X",
+                                      style: TextStyle(fontSize: 50.0),
+                                    )
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if(_selectedTitle.name == "chart"){
+                    return ShowChartOx();
+                  }
+                }),
+          )
         ],
       ),
       bottomNavigationBar: BottomNaviBar(),

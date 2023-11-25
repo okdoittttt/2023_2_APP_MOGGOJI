@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:moggoji/common/bottom_navi_bar.dart';
 import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/items/show_chart_survey.dart';
 import 'package:moggoji/pages/survey_page.dart';
 import 'package:moggoji/service/globals.dart';
 import 'package:http/http.dart' as http;
@@ -303,7 +304,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                             showDialog(context: context, builder: (context){
                               return ShowAlertDialogFillOut(
                                   title: "미입력!!",
-                                  content: "모든 항목을 입력해주세요!!"
+                                  content: "모든 항목을 선택해주세요!!"
                               );
                             });
                           } else {
@@ -341,7 +342,6 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                 onSelectionChanged: (Set<Title> newSelection){
                   setState(() {
                     _selectedTitle = newSelection.first;
-                    print(_selectedTitle.name);
                   });
                 },
                 segments: const <ButtonSegment<Title>>[
@@ -370,8 +370,8 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                         children: [
                           Text(contents[index]),
                           ListTile(
-                            leading: Text("매우 그렇지 않다"),
-                            trailing: Text("매우 그렇다"),
+                            leading: Text("매우 그렇다"),
+                            trailing: Text("전혀 아니다"),
                           ),
                           Slider(
                               min: 0,
@@ -391,8 +391,9 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                         ],
                       ),
                     );
+                  } else if(_selectedTitle.name == "chart" && contents[index] != ''){
+                    return ShowChartSurvey(surveyTitle: contents[index]);
                   }
-
                 }),
           )
         ],
