@@ -3,6 +3,7 @@ class Answer {
   int surveyType;
   String surveyTitle;
   String surveyCreator;
+  String respondent;
   int answer1;
   int answer2;
   int answer3;
@@ -24,6 +25,7 @@ class Answer {
     required this.surveyType,
     required this.surveyTitle,
     required this.surveyCreator,
+    required this.respondent,
     required this.answer1,
     required this.answer2,
     required this.answer3,
@@ -47,6 +49,7 @@ class Answer {
         surveyTitle: json['surveyTitle'],
         surveyType: json['surveyType'],
         surveyCreator: json['surveyCreator'],
+        respondent: json['respondent'],
         answer1: json['answer1'],
         answer2: json['answer2'],
         answer3: json['answer3'],
