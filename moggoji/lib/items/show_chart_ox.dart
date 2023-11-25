@@ -5,7 +5,15 @@ import '../resources/colors.dart';
 import 'indicator.dart';
 
 class ShowChartOx extends StatefulWidget {
-  const ShowChartOx({super.key});
+  final int answerOCount;
+  final int answerXCount;
+
+  ShowChartOx({
+    Key? key,
+    required this.answerOCount,
+    required this.answerXCount
+  })
+  : super(key: key);
 
   @override
   State<ShowChartOx> createState() => _ShowChartOxState();
@@ -13,12 +21,16 @@ class ShowChartOx extends StatefulWidget {
 
 class _ShowChartOxState extends State<ShowChartOx> {
   int touchedIndex = -1;
-  /* 임시데이터 */
-  double oNum = 70;
-  double xNum = 30;
+
+  double oNum = 0;
+  double xNum = 0;
 
   @override
   Widget build(BuildContext context) {
+    double sum = widget.answerOCount.toDouble() + widget.answerXCount.toDouble();
+    oNum = (widget.answerOCount.toDouble() / sum * 100).roundToDouble();
+    xNum = (widget.answerXCount.toDouble() / sum * 100).roundToDouble();
+
     return AspectRatio(
       aspectRatio: 1.3,
       child: Row(

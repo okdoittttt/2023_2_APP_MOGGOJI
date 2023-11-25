@@ -38,3 +38,4 @@ const String findSurveyByTypeURL = "$SurveybaseURL/getSurveyByType";
 
 const String AnswerbaseURL = "http://localhost:9191/answer";
 const String addAnswer = "$AnswerbaseURL/addAnswer";
+const String getAllBySurveyNumber = "$AnswerbaseURL/getAllBySurveyNumber";
