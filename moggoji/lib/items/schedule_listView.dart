@@ -3,13 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
-import 'package:moggoji/service/attendance.dart';
+import 'package:moggoji/service/attendanceService.dart';
 
 import '../models/schedule.dart';
 import '../service/globals.dart';
-import '../service/jwtTokenUnit.dart';
 
 class ListViewPage extends StatefulWidget {
   final String userName;
@@ -49,6 +46,14 @@ class _ListViewPageState extends State<ListViewPage> {
     }
   }
 
+  Future<void> joinSchedule(String postURL) async {
+    final response = await http.post(Uri.parse(postURL));
+    if(response.statusCode == 200) {
+      // 여기에 성공시 반환할 값 정의
+    }
+
+  }
+
   Future<void> generateRandomNumber() async {
     final response = await http.get(Uri.parse(generateNumber));
     int randomNumber = 0;
@@ -63,12 +68,6 @@ class _ListViewPageState extends State<ListViewPage> {
 
   // 출석등록 (변수이름 잘 못 설정함)
   Future<void> postNumber(String postURL) async {
-    final response = await http.post(Uri.parse(postURL));
-  }
-
-  // 번호 확인
-  Future<void> checkNumber(int enteredNumber) async {
-    String postURL = "${checkNumberURL}/$enteredNumber";
     final response = await http.post(Uri.parse(postURL));
   }
 
@@ -187,14 +186,11 @@ class _ListViewPageState extends State<ListViewPage> {
                       ],
                     ),
                     trailing: ElevatedButton(
-                      // onPressed: differenceDate.inSeconds <= 0
-                      //     ? null
-                      //     : () {},
                       onPressed: () {
                         // 참여 기능 ... (모달창 미구현) awit가 안됨. -> response의 statusCode를 확인할 수 없음.
                         String recordNameURL =
                             "$recordName/${schedule.number}/${widget.userName}";
-                        final response = http.post(Uri.parse(recordNameURL));
+                        joinSchedule(recordNameURL);
                       },
                       style: ButtonStyle(
                           shape:
@@ -340,17 +336,18 @@ class _ListViewPageState extends State<ListViewPage> {
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          checkNumber(enteredNumber);
+                                          Attendance attendace = Attendance();
+                                          attendace.checkNumber(enteredNumber, postURL);
+                                          // checkNumber(enteredNumber, postURL);
                                           Navigator.of(context).pop();
                                         },
                                         child: Text("출석번호 확인"),
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          postNumber(postURL);
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text("확인"),
+                                        child: Text("취소"),
                                       ),
                                     ],
                                   );
