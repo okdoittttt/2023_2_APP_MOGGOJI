@@ -64,6 +64,7 @@ class _SurveyTypeListViewState extends State<SurveyTypeListView> {
                       context,
                       MaterialPageRoute(builder: (context) => SubmitSurveyOx(
                         surveyTitle: survey.surveyTitle,
+                        surveyNumber: survey.surveyNumber,
                       ))
                   );
                 } else if(survey.surveyType == 2) {

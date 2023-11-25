@@ -95,6 +95,112 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
     answer14: 0,
     answer15: 0);
 
+  List<Answer> answersList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAnswers();
+  }
+
+  Future<void> fetchAnswers() async {
+    String resultAnswerURL = '$getAllBySurveyNumber/${widget.surveyNumber}';
+    final response = await http.get(Uri.parse(resultAnswerURL));
+    print(widget.surveyNumber);
+    if (response.statusCode == 200) {
+      final String responseBody = utf8.decode(response.bodyBytes);
+      final List<dynamic> data = jsonDecode(responseBody);
+      print(response.body);
+      setState(() {
+        answersList = data.map((json) => Answer.fromJson(json)).toList();
+      });
+    } else {
+      throw Exception('Failed to load schedules');
+    }
+  }
+
+  int answer1Count = 0;
+  int answer2Count = 0;
+  int answer3Count = 0;
+  int answer4Count = 0;
+  int answer5Count = 0;
+
+  void countAnswer(int answer) { 
+    switch(answer) {
+      case 1:
+        answer1Count++;
+        break;
+      case 2:
+        answer2Count++;
+        break;
+      case 3:
+        answer3Count++;
+        break;
+      case 4:
+        answer4Count++;
+        break;
+      case 5:
+        answer5Count++;
+        break;
+      default:
+        break;
+    }
+  }
+
+  void countAnswerByQuestion(int index) {
+    for(int i = 0; i<answersList.length; i++) {
+      switch(index) {
+        case 0:
+          countAnswer(answersList[i].answer1);
+          break;
+        case 1:
+          countAnswer(answersList[i].answer2);
+          break;
+        case 2:
+          countAnswer(answersList[i].answer3);
+          break;
+        case 3:
+          countAnswer(answersList[i].answer4);
+          break;
+        case 4:
+          countAnswer(answersList[i].answer5);
+          break;
+        case 5:
+          countAnswer(answersList[i].answer6);
+          break;
+        case 6:
+          countAnswer(answersList[i].answer7);
+          break;
+        case 7:
+          countAnswer(answersList[i].answer8);
+          break;
+        case 8:
+          countAnswer(answersList[i].answer9);
+          break;
+        case 9:
+          countAnswer(answersList[i].answer10);
+          break;
+        case 10:
+          countAnswer(answersList[i].answer11);
+          break;
+        case 11:
+          countAnswer(answersList[i].answer12);
+          break;
+        case 12:
+          countAnswer(answersList[i].answer13);
+          break;
+        case 13:
+          countAnswer(answersList[i].answer14);
+          break;
+        case 14:
+          countAnswer(answersList[i].answer15);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   Future save() async {
     var res = await http.post(Uri.parse(addAnswer),
         headers: headers,
@@ -377,7 +483,7 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                               min: 0,
                               max: 4,
                               divisions: 4,
-                              label: (sliders[index].floor() + 1).toString(),
+                              label: (sliders[index].floor() + 1).toString().substring(0),
                               value: sliders[index],
                               onChanged: (double value){
                                 setState(() {
@@ -388,11 +494,27 @@ class _SubmitSurveyFormState extends State<SubmitSurveyForm> {
                                 });
                               }
                           ),
+                          Divider(indent: 5, endIndent: 5,)
                         ],
                       ),
                     );
                   } else if(_selectedTitle.name == "chart" && contents[index] != ''){
-                    return ShowChartSurvey(surveyTitle: contents[index]);
+                    answer1Count = 0;
+                    answer2Count = 0;
+                    answer3Count = 0;
+                    answer4Count = 0;
+                    answer5Count = 0;
+
+                    countAnswerByQuestion(index);
+
+                    return ShowChartSurvey(
+                      surveyTitle: contents[index],
+                      answer1Count: answer1Count,
+                      answer2Count: answer2Count,
+                      answer3Count: answer3Count,
+                      answer4Count: answer4Count,
+                      answer5Count: answer5Count,
+                    );
                   }
                 }),
           )
