@@ -17,34 +17,20 @@ class _EventPageState extends State<EventPage> {
   int userNumber = 0;
   String userName = '';
 
-
   @override
   void initState() {
     super.initState();
-    getUserInfo();
+    fetchUserInfo();
   }
 
-  Future<void> getUserInfo() async {
+  void fetchUserInfo() async {
     JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
-    String? token = await jwtTokenUtil.loadToken();
+    await jwtTokenUtil.getUserInfo();
 
-    if (token != null) {
-      Map<String, String> headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      int userNumber = decodedToken["number"];
-      String userId = decodedToken["id"];
-      String userEmail = decodedToken["email"];
-      String userName = decodedToken["name"];
-      String userGender = decodedToken["gender"];
-      int userImgNumber = decodedToken["imageNumber"];
-      setState(() {
-        this.userName = userName;
-        this.userNumber = userNumber;
-      });
-    }
+    setState(() {
+      userNumber = jwtTokenUtil.userNumber ?? 0;
+      userName = jwtTokenUtil.userName ?? "";
+    });
   }
 
   @override

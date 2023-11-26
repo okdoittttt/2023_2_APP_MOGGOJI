@@ -4,15 +4,13 @@ import 'package:moggoji/service/globals.dart';
 import 'package:http/http.dart' as http;
 
 class Attendance {
-  // 랜덤 숫자 생성
-  Future<int> generateRandomNumber() async {
-    final response = await http.get(Uri.parse(generateNumber));
-    int randomNumber = 0;
-    if (response.statusCode == 200) {
-      randomNumber = json.decode(response.body);
-    }
+  int? randomNumber;
 
-    return randomNumber;
+  // 랜덤 숫자 생성
+  Future<void> generateRandomNumber() async {
+    final response = await http.get(Uri.parse(generateNumber));
+
+    await _handleRandomNumberResponse(response);
   }
   // 출석 등록
   Future<void> involved(String postURL) async {
@@ -26,6 +24,13 @@ class Attendance {
     final response = await http.post(Uri.parse(postURL));
 
     await _handleResponse(response, attendanceURL);
+  }
+
+  // Handler 정의
+  Future<void> _handleRandomNumberResponse(http.Response response) async {
+    if(response.statusCode == 200) {
+      randomNumber = json.decode(response.body);
+    }
   }
 
   Future<void> _handleResponse(http.Response response, String attendanceURL) async {

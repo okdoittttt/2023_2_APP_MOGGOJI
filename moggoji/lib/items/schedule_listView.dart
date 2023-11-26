@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:moggoji/service/attendanceService.dart';
+import 'package:moggoji/service/scheduleService.dart';
 
 import '../models/schedule.dart';
+import '../pages/detail/schedule_detail_page.dart';
 import '../service/globals.dart';
 
 class ListViewPage extends StatefulWidget {
@@ -22,53 +23,38 @@ class ListViewPage extends StatefulWidget {
 class _ListViewPageState extends State<ListViewPage> {
   List<Schedule> schedules = [];
   int enrollNum = 0;
-  int randomNumberTest = 0;
+  int? randomNumber;
 
   @override
   void initState() {
-    fetchSchedules();
     super.initState();
+    // fetchSchedules();
+    getSchedules();
   }
 
-  // 데이터를 가져 올 함수 정의
-  Future<void> fetchSchedules() async {
-    final response = await http.get(Uri.parse(TaskbaseURL));
+  // 사용할 클래스 정의
+  ScheduleService scheduleService = ScheduleService();
+  Attendance attendance = Attendance();
 
-    if (response.statusCode == 200) {
-      final String responseBody = utf8.decode(response.bodyBytes);
-      final List<dynamic> data = jsonDecode(responseBody);
-      print(response.body);
-      setState(() {
-        schedules = data.map((json) => Schedule.fromJson(json)).toList();
-      });
-    } else {
-      throw Exception('Failed to load schedules');
-    }
-  }
-
-  Future<void> joinSchedule(String postURL) async {
-    final response = await http.post(Uri.parse(postURL));
-    if(response.statusCode == 200) {
-      // 여기에 성공시 반환할 값 정의
-    }
-
-  }
-
-  Future<void> generateRandomNumber() async {
-    final response = await http.get(Uri.parse(generateNumber));
-    int randomNumber = 0;
-    if (response.statusCode == 200) {
-      randomNumber = json.decode(response.body);
-    }
-
+  // 스케쥴 리스트 가져오기
+  void getSchedules() async {
+    await scheduleService.getSchedules();
     setState(() {
-      randomNumberTest = randomNumber;
+      schedules = scheduleService.schedules;
     });
   }
 
-  // 출석등록 (변수이름 잘 못 설정함)
-  Future<void> postNumber(String postURL) async {
-    final response = await http.post(Uri.parse(postURL));
+  // 참여
+  Future<void> joinSchedule(String postURL) async {
+    await scheduleService.joinSchedule(postURL);
+  }
+
+  // 출석 번호 생성
+  Future<void> generateRandomNumber() async {
+    attendance.generateRandomNumber();
+    setState(() {
+      randomNumber = attendance.randomNumber ?? 0;
+    });
   }
 
   String resultName = '';
@@ -278,19 +264,28 @@ class _ListViewPageState extends State<ListViewPage> {
                             ),
                           ),
                           /* 추후 DB에서 인원 수 가져올 예정 */
-                          SizedBox(
-                            height: 30,
-                            child: ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: 0, vertical: -4),
-                              leading: Text(
-                                "참여",
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ScheduleDetailPage(userNames: schedule.participantName, scheduleTitle: schedule.title,)));
+                            },
+                            child: SizedBox(
+                              height: 30,
+                              child: ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: 0, vertical: -4),
+                                leading: Text(
+                                  "참여",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                  ),
                                 ),
+                                title: Text("${schedule.participantName}"),
                               ),
-                              title: Text("${schedule.participantName}"),
                             ),
                           ),
                         ],
@@ -306,7 +301,7 @@ class _ListViewPageState extends State<ListViewPage> {
                                   return AlertDialog(
                                     title: Text("출석번호 생성"),
                                     content: Text(
-                                      "${randomNumberTest}",
+                                      "${randomNumber}",
                                       style: TextStyle(
                                         fontSize: 30,
                                       ),
@@ -322,7 +317,8 @@ class _ListViewPageState extends State<ListViewPage> {
                                   );
                                 });
                           } else {
-                            String postURL = "${attendance}/${schedule.number}/${widget.userName}";
+                            String postURL =
+                                "${attendance}/${schedule.number}/${widget.userName}";
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -337,7 +333,8 @@ class _ListViewPageState extends State<ListViewPage> {
                                       TextButton(
                                         onPressed: () {
                                           Attendance attendace = Attendance();
-                                          attendace.checkNumber(enteredNumber, postURL);
+                                          attendace.checkNumber(
+                                              enteredNumber, postURL);
                                           // checkNumber(enteredNumber, postURL);
                                           Navigator.of(context).pop();
                                         },
