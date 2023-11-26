@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class JwtTokenUtil {
+  int? userNumber;
   String? userId;
   String? userEmail;
   String? userName;
@@ -45,6 +46,7 @@ class JwtTokenUtil {
       };
 
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      userNumber = decodedToken["number"];
       userId = decodedToken["id"];
       userEmail = decodedToken["email"];
       userName = decodedToken["name"];

@@ -2,16 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:moggoji/service/imagePickerService.dart';
 import 'package:moggoji/service/jwtTokenUnit.dart';
 
 import '../common/bottom_navi_bar.dart';
-import 'package:moggoji/models/user.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-
-import '../service/globals.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -23,6 +17,7 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage> {
   Color myBackgroundColor = Color.fromRGBO(244, 247, 253, 1.0);
 
+  int userNumber = 0;
   String userId = '';
   String userEmail = '';
   String userName = '';
@@ -42,6 +37,7 @@ class _MorePageState extends State<MorePage> {
     await jwtTokenUtil.getUserInfo();
 
     setState(() {
+      userNumber = jwtTokenUtil.userNumber ?? 0;
       userId = jwtTokenUtil.userId ?? "";
       userEmail = jwtTokenUtil.userEmail ?? "";
       userName = jwtTokenUtil.userName ?? "";
