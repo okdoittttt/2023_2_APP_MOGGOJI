@@ -8,6 +8,7 @@ import 'package:moggoji/pages/survey_page.dart';
 import 'package:moggoji/service/globals.dart';
 import 'package:http/http.dart' as http;
 import '../../models/answer.dart';
+import '../../service/jwtTokenUnit.dart';
 
 enum Title { checked, chart }
 
@@ -33,12 +34,14 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
   var isXBtnOn = false;
 
   Title _selectedTitle = Title.checked;
+  String userName = '';
 
   Answer answer = Answer(
       surveyNumber: 0,
       surveyType: 1,
       surveyTitle: '',
       surveyCreator: 'sonny',
+      respondent: 'sonny',
       answer1: 0,
       answer2: 0,
       answer3: 0,
@@ -63,6 +66,7 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
           'surveyType':answer.surveyType,
           'surveyTitle':answer.surveyTitle,
           'surveyCreator':answer.surveyCreator,
+          'respondent':answer.respondent,
           'answer1':answer.answer1,
           'answer2':answer.answer2,
           'answer3':answer.answer3,
@@ -88,6 +92,16 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
   void initState() {
     super.initState();
     fetchAnswers();
+    fetchUserInfo();
+  }
+
+  void fetchUserInfo() async {
+    JwtTokenUtil jwtTokenUtil = JwtTokenUtil();
+    await jwtTokenUtil.getUserInfo();
+
+    setState(() {
+      userName = jwtTokenUtil.userName ?? "";
+    });
   }
 
   Future<void> fetchAnswers() async {
@@ -161,6 +175,7 @@ class _SubmitSurveyOxState extends State<SubmitSurveyOx> {
                               } else {
                             answer.surveyTitle = widget.surveyTitle;
                             answer.surveyNumber = widget.surveyNumber;
+                            answer.respondent = userName;
                             save();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => SurveyPage()));
                           }
