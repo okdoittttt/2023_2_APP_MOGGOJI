@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moggoji/service/userService.dart';
 
+import '../models/user.dart';
 import '../service/scheduleService.dart';
 
 class ScheduleDetailListView extends StatefulWidget {
@@ -32,6 +34,17 @@ class _ScheduleDetailListViewState extends State<ScheduleDetailListView> {
     });
   }
 
+  // 이름으로 데이터 불러오기
+  List<User> userData = [];
+  Future<void> getUserData(String name) async {
+    UserService userService = UserService();
+    await userService.getUSerInfo(name);
+
+    setState(() {
+      userData = userService.userData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,6 +55,10 @@ class _ScheduleDetailListViewState extends State<ScheduleDetailListView> {
           shrinkWrap: true,
           itemCount: userNamesList.length,
           itemBuilder: (BuildContext context, int index) {
+            List<String> userEmailList = ["test@concon.con", "sstwer@qwer.com", "test@test.com", "test@test.com", "test@test.com"];
+            // getUserData("sonokmoo");
+            // final userTest = userData[index];
+
             return GestureDetector(
               onTap: () {
               },
@@ -100,7 +117,7 @@ class _ScheduleDetailListViewState extends State<ScheduleDetailListView> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                 child: Text(
-                                  "EMAIL",
+                                  userEmailList[index],
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.green,

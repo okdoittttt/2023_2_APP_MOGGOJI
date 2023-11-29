@@ -4,6 +4,7 @@ const String UserbaseURL = "http://localhost:9191/users";
 const String registerURL = "$UserbaseURL/register";
 const String loginURL = "$UserbaseURL/login";
 const String logoutURL = "$UserbaseURL/logout";
+const String getUserInfo = "$UserbaseURL/getUserInfo";
 
 // 이미지 API URL
 const String imagebaseURL = "http://localhost:9191/image";

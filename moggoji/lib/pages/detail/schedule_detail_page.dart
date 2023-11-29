@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moggoji/items/schedule_detail_listView.dart';
-import 'package:moggoji/service/scheduleService.dart';
 
 class ScheduleDetailPage extends StatefulWidget {
   // 페이지로 전달 받을 데이터
