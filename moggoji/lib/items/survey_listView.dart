@@ -53,6 +53,7 @@ class _SurveyListViewState extends State<SurveyListView> {
           itemCount: surveys.length,
           itemBuilder: (BuildContext context, int index) {
             final survey = surveys[index];
+            final String surveyImg = "assets/surveyImg${index+1}.jpg";
 
             return GestureDetector(
               onTap: () {
@@ -111,8 +112,8 @@ class _SurveyListViewState extends State<SurveyListView> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            'https://avatars.githubusercontent.com/u/39268032?s=200&v=4',
+                          child: Image.asset(
+                            'assets/surveyImg1.jpg',
                             width: double.infinity,
                             height: 160,
                             fit: BoxFit.cover,
