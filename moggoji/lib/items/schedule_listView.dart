@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moggoji/items/show_alert_dialog_fill_out.dart';
+import 'package:moggoji/pages/event_page.dart';
 import 'package:moggoji/service/attendanceService.dart';
 import 'package:moggoji/service/scheduleService.dart';
 
@@ -172,11 +174,27 @@ class _ListViewPageState extends State<ListViewPage> {
                       ],
                     ),
                     trailing: ElevatedButton(
-                      onPressed: () {
+                      onPressed: differenceDate.inSeconds <= 0? null : (){
                         // 참여 기능 ... (모달창 미구현) awit가 안됨. -> response의 statusCode를 확인할 수 없음.
                         String recordNameURL =
                             "$recordName/${schedule.number}/${widget.userName}";
                         joinSchedule(recordNameURL);
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                                return AlertDialog(
+                                  title: Text("참여완료"),
+                                  content: Text('${schedule.title}행사에 참여완료'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          getSchedules();
+                                    }
+                                        ,child: Text("확인"))
+                                  ],
+                                );
+                            });
                       },
                       style: ButtonStyle(
                           shape:
@@ -272,7 +290,7 @@ class _ListViewPageState extends State<ListViewPage> {
                                       builder: (context) =>
                                           ScheduleDetailPage(userNames: schedule.participantName, scheduleTitle: schedule.title,)));
                             },
-                            child: SizedBox(
+                            child: SizedBox( //4명 참여되면 안보임
                               height: 30,
                               child: ListTile(
                                 visualDensity:
@@ -323,7 +341,7 @@ class _ListViewPageState extends State<ListViewPage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("출석번호 생성"),
+                                    title: Text("출석번호 인증"),
                                     content: TextField(
                                       onChanged: (val) {
                                         enteredNumber = int.tryParse(val) ?? 0;
@@ -332,19 +350,47 @@ class _ListViewPageState extends State<ListViewPage> {
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          Attendance attendace = Attendance();
-                                          attendace.checkNumber(
-                                              enteredNumber, postURL);
-                                          // checkNumber(enteredNumber, postURL);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text("출석번호 확인"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                         child: Text("취소"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async{
+                                          Attendance attendace = Attendance();
+                                          bool checkedNum = await attendace.checkNumber(enteredNumber, postURL);
+                                          setState(() {
+                                            if(!checkedNum) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ShowAlertDialogFillOut(
+                                                        title: "출석번호 오류",
+                                                        content: "출석번호가 틀립니다.\n다시 한 번 더 확인해 주세요!");
+                                                  });
+                                            } else {
+                                              Navigator.of(context).pop();
+                                              enteredNumber = 0;
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Text("출석완료"),
+                                                      content: Text("출석이 완료되었습니다!"),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(context,'Cancel');
+                                                            },
+                                                            child: Text("완료"))
+                                                      ],
+                                                    );
+                                                  });
+                                            }
+                                          });
+                                          // checkNumber(enteredNumber, postURL);
+                                          // Navigator.of(context).pop();
+                                        },
+                                        child: Text("출석번호 확인"),
                                       ),
                                     ],
                                   );
