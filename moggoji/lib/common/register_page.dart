@@ -57,6 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextButton(
                       onPressed: (){
                         setState(() {
+                          inputInitAge = (_selectedAge + 1).toString();
                           user.age = _selectedAge + 1;
                         });
                         Navigator.pop(context);
@@ -96,6 +97,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // 성별 토글 컨트롤러
   TextEditingController ageController = TextEditingController();
+
+  String inputInitAge = "";
 
   @override
   Widget build(BuildContext context) {
@@ -397,7 +400,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                               child: TextFormField(
                                 controller: TextEditingController(
-                                    text: user.age.toString()),
+                                    text: inputInitAge),
                                 onTap: () {
                                   _showDialog(
                                       CupertinoPicker(
@@ -516,6 +519,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 onPressed: () {
                                   try {
+                                    user.age = int.tryParse(inputInitAge)??0;
                                     save();
                                     // 회원가입에 성공한 경우 다이얼로그 표시
                                     showDialog(
