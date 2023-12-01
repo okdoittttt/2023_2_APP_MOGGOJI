@@ -22,6 +22,9 @@ class _NoticePageState extends State<NoticePage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -37,7 +40,7 @@ class _NoticePageState extends State<NoticePage> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => RegistNoticePage()));
                     },
-                    child: Text("관리", style: TextStyle(fontSize: 15))
+                    child: Text("등록", style: TextStyle(fontSize: 15))
                 )
               ],
             )),
@@ -80,6 +83,7 @@ class _NoticePageState extends State<NoticePage> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                             child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
                               width: 200,
                               child: TextFormField(
                                 obscureText: false,

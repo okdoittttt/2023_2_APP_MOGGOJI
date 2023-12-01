@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:moggoji/service/globals.dart';
@@ -18,12 +19,12 @@ class Attendance {
   }
 
   // 번호 확인 및 출석 메서드
-  Future<void> checkNumber(int enteredNumber, String attenURL) async {
+  FutureOr<bool> checkNumber(int enteredNumber, String attenURL) async {
     String attendanceURL = attenURL;
     String postURL = "${checkNumberURL}/$enteredNumber";
     final response = await http.post(Uri.parse(postURL));
 
-    await _handleResponse(response, attendanceURL);
+    return await _handleResponse(response, attendanceURL);
   }
 
   // Handler 정의
@@ -33,7 +34,7 @@ class Attendance {
     }
   }
 
-  Future<void> _handleResponse(http.Response response, String attendanceURL) async {
+  FutureOr<bool> _handleResponse(http.Response response, String attendanceURL) async {
     String postURL = attendanceURL;
     if (response.statusCode == 200) {
       final String responseBody = utf8.decode(response.bodyBytes);
@@ -42,11 +43,14 @@ class Attendance {
 
       if (responseBody == "true") {
         print("checkPoint");
+        return true;
         final responses = await http.post(Uri.parse(postURL));
       } else {
         // 출석번호 오류시 반환할 모달창 구현
         print("출석번호 오류 발생 !!!");
+        return false;
       }
     }
+    return false;
   }
 }

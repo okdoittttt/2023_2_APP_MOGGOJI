@@ -77,6 +77,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
         child: Scaffold(
           backgroundColor: Colors.lightBlue,
           body: Form(
