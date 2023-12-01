@@ -23,6 +23,9 @@ class _SurveyPageState extends State<SurveyPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -88,6 +91,7 @@ class _SurveyPageState extends State<SurveyPage> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                             child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
                               width: 200,
                               child: TextFormField(
                                 obscureText: false,

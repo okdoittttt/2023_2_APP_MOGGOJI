@@ -62,7 +62,8 @@ class _DetailNoticePageState extends State<DetailNoticePage> {
                     SizedBox(height: 10),
                     Center(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        margin: EdgeInsets.symmetric(horizontal: 12.0),
+                        width: double.infinity,
                         height: 400,
                         decoration: BoxDecoration(
                           border: Border.all(

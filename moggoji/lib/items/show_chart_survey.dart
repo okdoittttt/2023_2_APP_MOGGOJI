@@ -119,7 +119,7 @@ class _ShowChartSurveyState extends State<ShowChartSurvey> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: (widget.answer1Count + widget.answer2Count + widget.answer3Count + widget.answer4Count + widget.answer5Count).toDouble(),  // y축 최대값
+            toY: (widget.answer1Count + widget.answer2Count + widget.answer3Count + widget.answer4Count + widget.answer5Count + 2).toDouble(),  // y축 최대값
             color: widget.barBackgroundColor,
           ),
         ),
